@@ -127,8 +127,8 @@ const getPosts = async (query, userId = null) => {
             ];
         };
 
-        const totalDocuments = await Posts.countDocuments(filterBy);
-        const totalPages = Math.ceil(totalDocuments / limit);
+        // const totalDocuments = await Posts.countDocuments(filterBy);
+        // const totalPages = Math.ceil(totalDocuments / limit);
 
         /**
          * Paginated list of posts
@@ -140,7 +140,7 @@ const getPosts = async (query, userId = null) => {
             .populate('author')
             .lean();
 
-        return { posts, currentPage, totalDocuments, totalPages };
+        return { posts, currentPage };
 
     } catch (err) {
         throw new NotifyError(`Failed to get posts: ${err.message}`, 500);
