@@ -35,7 +35,7 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(express.json());
-app.use(minifyHTML);
+// app.use(minifyHTML);
 
 app.use(timeFormatterGlobal);
 
