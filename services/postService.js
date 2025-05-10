@@ -115,8 +115,6 @@ const getPosts = async (query, userId = null) => {
         const limit = 15;
         const currentPage = parseInt(page);
 
-        const totalPages = Math.ceil(totalDocuments / limit);
-
         let filterBy = {};
 
         if (userId) {
@@ -130,6 +128,7 @@ const getPosts = async (query, userId = null) => {
         };
 
         const totalDocuments = await Posts.countDocuments(filterBy);
+        const totalPages = Math.ceil(totalDocuments / limit);
 
         /**
          * Paginated list of posts
