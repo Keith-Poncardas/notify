@@ -49,5 +49,5 @@ app.use('/auth', authRoutes);
 app.use(pageNotFound);
 app.use(errorHandler);
 
-connectDB();
+await connectDB();
 app.listen(PORT, () => logger.success(`Server is connected to http://localhost:${PORT}`));
