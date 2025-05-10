@@ -115,7 +115,9 @@ const getPosts = async (query, userId = null) => {
         const limit = 15;
         const currentPage = parseInt(page);
 
-        const totalDocuments = await Posts.countDocuments();
+
+        console.log(totalDocuments);
+
         const totalPages = Math.ceil(totalDocuments / limit);
 
         let filterBy = {};
@@ -129,6 +131,8 @@ const getPosts = async (query, userId = null) => {
                 { description: { $regex: search, $options: 'i' } },
             ];
         };
+
+        const totalDocuments = await Posts.countDocuments(filterBy);
 
         /**
          * Paginated list of posts
