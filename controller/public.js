@@ -5,12 +5,16 @@ const { getUser, getUsers } = require('../services/userService');
 const { countLike } = require('../services/likeService');
 const enrichPostWithLikes = require('../utils/postWithLikes');
 
-const homepage = async (req, res) => {
+const homepage = async (req, res, next) => {
     const user = res.locals.user;
 
     try {
         const listOfPosts = await getPosts({});
         const { posts } = listOfPosts;
+
+        if (!listOfPosts) {
+            throw new NotifyError('Failed to render posts', 500);
+        };
 
         const postsWithLikes = await Promise.all(
             posts.map((post) => enrichPostWithLikes(post, user))
@@ -18,7 +22,7 @@ const homepage = async (req, res) => {
 
         res.render('public/home', { posts: postsWithLikes });
     } catch (err) {
-        throw new NotifyError(err.message);
+        next(err);
     }
 };
 
