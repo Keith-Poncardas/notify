@@ -143,7 +143,7 @@ const getPosts = async (query, userId = null) => {
         return { posts, currentPage, totalDocuments, totalPages };
 
     } catch (err) {
-        throw new NotifyError(`Failed to get posts: ${err.message}`);
+        throw new NotifyError(`Failed to get posts: ${err.message}`, 500);
     }
 };
 
