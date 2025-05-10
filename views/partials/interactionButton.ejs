@@ -1,0 +1,21 @@
+<div class="btn-group btn-group-md shadow-0 w-100" role="group" aria-label="Basic example">
+
+  <button type="button" class="btn btn-outline-secondary flex-fill like-btn <%= post.isLikedByUser ? 'liked active' : '' %>" data-mdb-color="dark" data-post-id="<%= post._id %>" data-mdb-ripple-init <% if (!user) { %> disabled <% } %>>
+    <i class="fas <%= post.isLikedByUser ? 'fa-thumbs-down' : 'fa-thumbs-up' %> me-1"></i>
+    <%= post.isLikedByUser ? 'Liked' : 'Like' %>
+    <span class="badge badge-primary ms-1 like-count"><%= post.likeCount %></span>
+  </button>
+
+  <button onclick="window.location = '/home/<%= post._id %>/view'" type="button" class="btn btn-outline-secondary flex-fill" data-mdb-color="dark" data-mdb-ripple-init <% if (!user || isDisabled) { %> disabled <% } %>>
+    <i class="fa-solid fa-comment me-1"></i>
+    Comments
+    <span class="badge badge-primary ms-1">1k</span>
+    </a>
+
+    <button type="button" class="btn btn-outline-secondary flex-fill" data-mdb-color="dark" data-mdb-ripple-init <% if (!user) { %> disabled <% } %>>
+      <i class="fa-solid fa-share me-1"></i>
+      Share
+      <span class="badge badge-primary ms-1">234</span>
+    </button>
+
+</div>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Users Page</title>
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdn.jsdelivr.net/npm/mdb-ui-kit@9.0.0/css/mdb.min.css" rel="stylesheet" />
+
+</head>
+
+<body data-mdb-theme="dark">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm">
+
+    <!-- Container wrapper -->
+    <div class="container">
+
+      <!-- Navbar brand - moved up for better mobile visibility -->
+      <a class="navbar-brand d-flex align-items-center me-3" href="#">
+        <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="30" alt="MDB Logo" loading="lazy" />
+      </a>
+
+      <!-- Toggle button - improved with proper icon and styling -->
+      <button data-mdb-collapse-init class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars fa-lg"></i>
+      </button>
+
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navbarSupportedContent">
+        <!-- Search form - made responsive and better spaced -->
+        <form class="d-flex input-group w-auto mx-auto mx-lg-0 ms-lg-3 mb-3 mb-lg-0">
+          <div class="input-group rounded">
+            <input type="search" class="form-control rounded-pill ps-3 border-0" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+          </div>
+        </form>
+
+        <!-- Spacer to push content to opposite edges -->
+        <div class="ms-auto d-none d-lg-block"></div>
+      </div>
+
+      <!-- Right elements - always visible on mobile -->
+      <div class="d-flex align-items-center ms-auto ms-lg-0">
+        <!-- Avatar - improved styling and accessibility -->
+        <div class="dropdown">
+          <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
+            <img src="https://scontent.fmnl31-1.fna.fbcdn.net/v/t39.30808-6/487082631_627342240103305_8538549922081128125_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEZ_f5rijng8OxvLTdg2TToqkEJA5-Am-mqQQkDn4Cb6WNYfjnWi6LRK4mhunzspKaB_SjckZ9hisJHWHnDq2PY&_nc_ohc=xAnZ9xNXmsIQ7kNvgEiDYXZ&_nc_oc=Adn79TBWFal2MNg7pvT01XVkzC6wpUETsUZ7_GEUWzExxmy99C5pH99DdR0bwAphIbsdzh61aw-hfp73qE-45Wmz&_nc_zt=23&_nc_ht=scontent.fmnl31-1.fna&_nc_gid=2W6-jUrjl0ZU9MIkbXkI2Q&oh=00_AYH2pmOm7hS8D4DIrNfbalNl4k3cbdT80EgmJxveF9UaSg&oe=67F10C57" class="rounded-circle shadow-sm border border-primary border-2 p-1" height="35" alt="User profile" loading="lazy" />
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm mt-2" aria-labelledby="navbarDropdownMenuAvatar">
+            <li>
+              <a class="dropdown-item py-2" href="#">
+                <i class="fas fa-user-circle me-2"></i> My profile
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item py-2" href="#">
+                <i class="fas fa-cog me-2"></i> Settings
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item py-2" href="#">
+                <i class="fas fa-sign-out-alt me-2"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Off Canvas -->
+  <div class="offcanvas offcanvas-start bg-body-tertiary" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <a class="navbar-brand d-flex align-items-center me-3" href="#">
+        <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="30" alt="MDB Logo" loading="lazy" />
+      </a>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="list-group list-group-light vh-100 gap-2">
+
+        <!-- Search form - made responsive and better spaced -->
+        <form class="d-flex input-group mx-auto mx-lg-0 ms-lg-3 mb-3 mb-lg-0">
+          <div class="input-group rounded">
+            <input type="search" class="form-control rounded-pill ps-3 border-0" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+          </div>
+        </form>
+
+        <a href="#" class="list-group-item list-group-item-action px-3 border-0 active" aria-current="true">
+          <i class="fas fa-home me-3"></i><span>Home</span>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action px-3 border-0">
+          <i class="fas fa-user me-3"></i><span>My Profile</span>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action px-3 border-0">
+          <i class="fas fa-heart me-3"></i><span>Liked Posts</span>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action px-3 border-0">
+          <i class="fas fa-users me-3"></i><span>People</span>
+        </a>
+
+
+        <div class="mt-auto">
+          <hr class="my-3">
+          <a href="#" class="list-group-item list-group-item-action px-3 border-0"><i class="fas fa-sign-out-alt me-3"></i><span>Logout</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-md mt-3" style="max-width: 650px;">
+
+    <div class="my-3">
+      <small class="text-muted fw-bold"><i class="fas fa-users me-2"></i>People</small>
+    </div>
+
+    <div class="card bg-body-tertiary p-3 mb-3">
+      <div class="d-flex">
+
+        <img src="https://scontent.fmnl31-1.fna.fbcdn.net/v/t39.30808-1/348221701_646768810112359_4807113912745902646_n.jpg?stp=dst-jpg_s200x200_tt6&_nc_cat=1&ccb=1-7&_nc_sid=2d3e12&_nc_eui2=AeFaxJKl9zVSe7lrTkOT6CmJlVlsQmo4sRWVWWxCajixFUcDZsAKuBsCUhSK9XKsGanXJwqvs5JNoVeQL8EW7Rb7&_nc_ohc=i7G6vPFtqywQ7kNvwGJsxBm&_nc_oc=Adk9CkpJ_yeFD1B7C3xTbjafCnmI9R_4Ibf4j4F8ewE-JN7mHyrh2YRALK356bZJxcBbv4zZR1OyBGOtkG-_e03F&_nc_zt=24&_nc_ht=scontent.fmnl31-1.fna&_nc_gid=j0kunp8-vIQF2gevkqBp2w&oh=00_AYHJREOJ_sasmO9fpOWGU9xDqzKu8nYgGJTvreN4GBOkYQ&oe=67F5052C" class="rounded-circle shadow-sm border border-primary border-2 p-1 me-3" height="42" width="42" alt="Profile picture of Keith Poncardas" loading="lazy" decoding="async" />
+
+        <div>
+          <h5 class="card-title fs-6 m-0" id="post-author">John Doe</h5>
+          <time class="card-subtitle text-muted small" datetime="2025-03-29">@doe_john</time>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card bg-body-tertiary p-3 mb-3">
+      <div class="d-flex">
+
+        <img src="https://scontent.fmnl31-1.fna.fbcdn.net/v/t39.30808-6/438082534_1122388549046473_5943915948942050327_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGZCpe_1FW6_T2RYhCrQaKf7MoB4G4oIELsygHgbiggQvuX9zwoi8YKsShGhB2qZfQk1_nGhUJROhaLHYgj22OD&_nc_ohc=LLKwxDf3wyEQ7kNvwGGdWsV&_nc_oc=AdlKMg8Ji09YyZmWMIpl-5xY82sBrJKovBA98XOIGHHM1sldoQ7XLKophtTV0jdieM9uSMzUwnrtWjgJYpP5xEHJ&_nc_zt=23&_nc_ht=scontent.fmnl31-1.fna&_nc_gid=PJL2UAh_WgKca6UGsTk8pQ&oh=00_AYF0Ffe8SHXKUNqhuExtrknDRIzS_VvNZUmrfPtU8AzmQw&oe=67F4EF01" class="rounded-circle shadow-sm border border-primary border-2 p-1 me-3" height="42" width="42" alt="Profile picture of Keith Poncardas" loading="lazy" decoding="async" />
+
+        <div>
+          <h5 class="card-title fs-6 m-0" id="post-author">Ross Dickinson</h5>
+          <time class="card-subtitle text-muted small" datetime="2025-03-29">@master_keith</time>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card bg-body-tertiary p-3 mb-3">
+      <div class="d-flex">
+
+        <img src="https://scontent.fmnl31-1.fna.fbcdn.net/v/t39.30808-1/481174292_1169914871809225_4482331168382505418_n.jpg?stp=dst-jpg_s160x160_tt6&_nc_cat=1&ccb=1-7&_nc_sid=2d3e12&_nc_eui2=AeGaxX0oskm6mVFVjJ8pOqm983LMnJWulVrzcsycla6VWkN5VVmlrc-XNQFiNBcfOX_vSAbJTmJTVgM-JfPaGKLx&_nc_ohc=u9w28k8eIywQ7kNvwFArx4Z&_nc_oc=AdkmaNmqqWVfpCrE8zrJuYf1cmhApTqsMUUjBTeP5nl8MR8-bQ4ZHwYQ-Fbs_rRX7d-J1MlPqZ62SsHLdAvU2xOY&_nc_zt=24&_nc_ht=scontent.fmnl31-1.fna&_nc_gid=xD_PhZLFB-zEs4ASJEAGEg&oh=00_AYGwDZqQUa9Q9bM1gKyuJCadnyPfbXBvpQWLaVRBNBGVGQ&oe=67F5200D" class="rounded-circle shadow-sm border border-primary border-2 p-1 me-3" height="42" width="42" alt="Profile picture of Keith Poncardas" loading="lazy" decoding="async" />
+
+        <div>
+          <h5 class="card-title fs-6 m-0" id="post-author">Trillybeatz </h5>
+          <time class="card-subtitle text-muted small" datetime="2025-03-29">@TrillyBeatz</time>
+        </div>
+
+      </div>
+    </div>
+
+
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mdb-ui-kit@9.0.0/js/mdb.umd.min.js"></script>
+</body>
+
+</html>

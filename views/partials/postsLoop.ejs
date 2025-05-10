@@ -1,0 +1,7 @@
+<% if (posts.length === 0) { %>
+<%- include('../partials/emptyState', { icon: 'far fa-folder-open', text: 'No Posts Available', subtext: 'This user has no posts yet.', bold: false }); %>
+<% } else { %>
+<% posts.forEach((post) => { %>
+<%- include('../partials/postCard', { post, isDisabled: false }) %>
+<% }) %>
+<% } %>

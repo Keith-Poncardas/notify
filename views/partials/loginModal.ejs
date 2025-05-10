@@ -1,0 +1,55 @@
+<!-- Login Modal (MDB Version) -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-body-tertiary rounded-5 shadow-4">
+
+      <!-- Modal Header -->
+      <div class="modal-header border-0">
+        <h5 class="modal-title text-info fw-bold" id="loginModalLabel">Login</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body px-4">
+
+        <p class="text-muted text-center mb-4">Welcome back! Please login to your account.</p>
+
+        <div id="loginAlertContainer"></div>
+
+        <div class="mb-4">
+          <div data-mdb-input-init class="form-outline">
+            <input type="text" id="loginUsername" class="form-control" />
+            <label class="form-label" for="loginUsername">Username</label>
+
+            <div class="invalid-feedback">
+              This field is required.
+            </div>
+
+          </div>
+
+        </div>
+
+        <div class="mb-4">
+          <div data-mdb-input-init class="form-outline">
+            <input type="password" id="loginPassword" class="form-control" />
+            <label class="form-label" for="loginPassword">Password</label>
+
+            <div class="invalid-feedback">
+              This field is required.
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer border-0 px-4 pb-4">
+        <button type="button" class="btn btn-info w-100" id="loginSubmitButton" data-mdb-ripple-init>
+          Login
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

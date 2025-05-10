@@ -1,0 +1,14 @@
+<div class="card bg-body-tertiary p-3 mb-3">
+  <div class="d-flex">
+
+    <a href="/home/<%= user._id %>/profile">
+      <img src="<%= user.profile_image %>" class="rounded-circle shadow-sm border border-primary border-2 p-1 me-3" height="42" width="42" alt="Profile picture of Keith Poncardas" loading="lazy" decoding="async" />
+    </a>
+
+    <div>
+      <h5 class="card-title fs-6 m-0" id="post-author"><%= user.firstname %> <%= user.lastname %></h5>
+      <time class="card-subtitle text-muted small" datetime="2025-03-29">@<%= user.username %></time>
+    </div>
+
+  </div>
+</div>

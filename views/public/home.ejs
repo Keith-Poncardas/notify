@@ -1,0 +1,8 @@
+<% layout('layout/main') %>
+
+<!-- CREATE POST -->
+<%- include('../partials/postInput', { placeholder: `What's on you mind`, dataAction: 'create-post', dataTitle: 'Create Post', dataId: 123 }) %>
+<!-- Material Icons - 'rss-feed' -->
+<%- include('../partials/sectionLabel', { icon: 'fa-solid fa-rss', title: 'Newsfeed' }) %>
+
+<%- include('../partials/postsLoop', { posts }); %>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edit Profile</title>
+
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  <!-- MDB -->
+  <link href="https://cdn.jsdelivr.net/npm/mdb-ui-kit@9.0.0/css/mdb.min.css" rel="stylesheet" />
+
+</head>
+
+<body data-mdb-theme="dark">
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm">
+
+    <!-- Container wrapper -->
+    <div class="container">
+
+      <!-- Navbar brand - moved up for better mobile visibility -->
+      <a class="navbar-brand d-flex align-items-center me-3" href="#">
+        <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="30" alt="MDB Logo" loading="lazy" />
+      </a>
+
+      <!-- Toggle button - improved with proper icon and styling -->
+      <button data-mdb-collapse-init class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars fa-lg"></i>
+      </button>
+
+      <!-- Collapsible wrapper -->
+      <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navbarSupportedContent">
+        <!-- Search form - made responsive and better spaced -->
+        <form class="d-flex input-group w-auto mx-auto mx-lg-0 ms-lg-3 mb-3 mb-lg-0">
+          <div class="input-group rounded">
+            <input type="search" class="form-control rounded-pill ps-3 border-0" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+          </div>
+        </form>
+
+        <!-- Spacer to push content to opposite edges -->
+        <div class="ms-auto d-none d-lg-block"></div>
+      </div>
+
+      <!-- Right elements - always visible on mobile -->
+      <div class="d-flex align-items-center ms-auto ms-lg-0">
+        <!-- Avatar - improved styling and accessibility -->
+        <div class="dropdown">
+          <a data-mdb-dropdown-init class="dropdown-toggle d-flex align-items-center hidden-arrow" href="#" id="navbarDropdownMenuAvatar" role="button" aria-expanded="false">
+            <img src="https://scontent.fmnl31-1.fna.fbcdn.net/v/t39.30808-6/487082631_627342240103305_8538549922081128125_n.jpg?_nc_cat=105&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeEZ_f5rijng8OxvLTdg2TToqkEJA5-Am-mqQQkDn4Cb6WNYfjnWi6LRK4mhunzspKaB_SjckZ9hisJHWHnDq2PY&_nc_ohc=xAnZ9xNXmsIQ7kNvgEiDYXZ&_nc_oc=Adn79TBWFal2MNg7pvT01XVkzC6wpUETsUZ7_GEUWzExxmy99C5pH99DdR0bwAphIbsdzh61aw-hfp73qE-45Wmz&_nc_zt=23&_nc_ht=scontent.fmnl31-1.fna&_nc_gid=2W6-jUrjl0ZU9MIkbXkI2Q&oh=00_AYH2pmOm7hS8D4DIrNfbalNl4k3cbdT80EgmJxveF9UaSg&oe=67F10C57" class="rounded-circle shadow-sm border border-primary border-2 p-1" height="35" alt="User profile" loading="lazy" />
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm mt-2" aria-labelledby="navbarDropdownMenuAvatar">
+            <li>
+              <a class="dropdown-item py-2" href="#">
+                <i class="fas fa-user-circle me-2"></i> My profile
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item py-2" href="#">
+                <i class="fas fa-cog me-2"></i> Settings
+              </a>
+            </li>
+            <li>
+              <hr class="dropdown-divider">
+            </li>
+            <li>
+              <a class="dropdown-item py-2" href="#">
+                <i class="fas fa-sign-out-alt me-2"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Off Canvas -->
+  <div class="offcanvas offcanvas-start bg-body-tertiary" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <a class="navbar-brand d-flex align-items-center me-3" href="#">
+        <img src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp" height="30" alt="MDB Logo" loading="lazy" />
+      </a>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="list-group list-group-light vh-100 gap-2">
+
+        <!-- Search form - made responsive and better spaced -->
+        <form class="d-flex input-group mx-auto mx-lg-0 ms-lg-3 mb-3 mb-lg-0">
+          <div class="input-group rounded">
+            <input type="search" class="form-control rounded-pill ps-3 border-0" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+          </div>
+        </form>
+
+        <a href="#" class="list-group-item list-group-item-action px-3 border-0 active" aria-current="true">
+          <i class="fas fa-home me-3"></i><span>Home</span>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action px-3 border-0">
+          <i class="fas fa-user me-3"></i><span>My Profile</span>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action px-3 border-0">
+          <i class="fas fa-heart me-3"></i><span>Liked Posts</span>
+        </a>
+        <a href="#" class="list-group-item list-group-item-action px-3 border-0">
+          <i class="fas fa-users me-3"></i><span>People</span>
+        </a>
+
+
+        <div class="mt-auto">
+          <hr class="my-3">
+          <a href="#" class="list-group-item list-group-item-action px-3 border-0"><i class="fas fa-sign-out-alt me-3"></i><span>Logout</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="container-md mt-3" style="max-width: 650px;">
+
+    <div class="card p-4 shadow-sm rounded-3 bg-body-tertiary mb-3">
+      <div class="card-header text-light fw-bold fs-5">Edit Profile</div>
+      <div class="card-body">
+        <form>
+          <!-- Name Fields -->
+          <div class="row g-3 mb-3">
+            <div class="col-md-6">
+              <label for="firstName" class="form-label">First Name</label>
+              <input type="text" id="firstName" class="form-control border-0 rounded-4" value="Keith Ralph" />
+            </div>
+            <div class="col-md-6">
+              <label for="lastName" class="form-label">Last Name</label>
+              <input type="text" id="lastName" class="form-control border-0 rounded-4" value="Poncardas" />
+            </div>
+          </div>
+
+          <!-- Username -->
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" id="username" class="form-control border-0 rounded-4" value="master_keith" />
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3">
+            <label for="password" class="form-label">New Password</label>
+            <input type="password" id="password" class="form-control border-0 rounded-4" placeholder="Enter new password" />
+          </div>
+
+          <!-- Profile Image -->
+          <div class="mb-3 d-flex">
+            <div class="mt-2 me-3">
+              <img id="profilePreview" src="https://scontent.fmnl31-1.fna.fbcdn.net/v/t39.30808-6/481275382_614355251402004_900752849476126822_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeGc-Ngj-rTyc3bIx8y26fef84V-pt0I28TzhX6m3QjbxNYRqwcCVMluLUSz221AJJmWpujhWH--LwgJFef6Bwpq&_nc_ohc=RqCOlNMMKagQ7kNvgF47W2D&_nc_oc=AdmF-FkJKL2wwJEZhvE7XHnKndb9Nvr6wk2vFGIK-o2xh5M3s1PHexINnPpx1Zwkb049rjRtXiNrNjoDafz-fowj&_nc_zt=23&_nc_ht=scontent.fmnl31-1.fna&_nc_gid=N_RKnY7L6G-GzVLMFwUnOg&oh=00_AYGt-0ruI2hgGhySFL-ul5RuotHdo5OinyLYF729-X6IoQ&oe=67F47CBD" alt="Profile Preview" class="rounded-circle border border-3 border-primary p-1" width="60" height="60" />
+            </div>
+            <div class="flex-grow-1">
+              <label class="form-label">Profile Image</label>
+              <div class="d-flex gap-2">
+                <input type="url" id="profileImageUrl" class="form-control border-0 rounded-4" placeholder="Or enter image URL" value="https://scontent.fmnl31-1.fna.fbcdn.net/v/t39.30808-6/481275382_614355251402004_900752849476126822_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeGc-Ngj-rTyc3bIx8y26fef84V-pt0I28TzhX6m3QjbxNYRqwcCVMluLUSz221AJJmWpujhWH--LwgJFef6Bwpq&_nc_ohc=RqCOlNMMKagQ7kNvgF47W2D&_nc_oc=AdmF-FkJKL2wwJEZhvE7XHnKndb9Nvr6wk2vFGIK-o2xh5M3s1PHexINnPpx1Zwkb049rjRtXiNrNjoDafz-fowj&_nc_zt=23&_nc_ht=scontent.fmnl31-1.fna&_nc_gid=N_RKnY7L6G-GzVLMFwUnOg&oh=00_AYGt-0ruI2hgGhySFL-ul5RuotHdo5OinyLYF729-X6IoQ&oe=67F47CBD" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Social Link -->
+          <div class="mb-3">
+            <label for="socialLink" class="form-label">Social Link (Optional)</label>
+            <input type="url" id="socialLink" class="form-control border-0 rounded-4" value="https://demo.social.link/" />
+          </div>
+
+          <!-- Bio -->
+          <div class="mb-3">
+            <label for="bio" class="form-label">Bio</label>
+            <textarea id="bio" class="form-control border-0 rounded-4" rows="3">Software Engineer, Record Producer.</textarea>
+          </div>
+
+          <!-- Buttons -->
+          <div class="d-flex justify-content-end gap-2">
+            <button type="button" class="btn btn-outline-secondary">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Live preview for profile image
+      document.getElementById('profileImageUrl').addEventListener('input', function() {
+        document.getElementById('profilePreview').src = this.value;
+      });
+    </script>
+
+  </div>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+  <!-- MDB -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/mdb-ui-kit@9.0.0/js/mdb.umd.min.js"></script>
+</body>
+
+</html>

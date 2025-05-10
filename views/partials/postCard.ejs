@@ -1,0 +1,69 @@
+<div class="card bg-body-tertiary rounded-3 mb-3">
+  <div class="card-body">
+    <div class="align-items-center">
+
+      <!-- Post Header -->
+      <div class="d-flex align-items-start">
+
+        <!-- Profile Picture -->
+
+        <a href="/home/<%= post.author._id %>/profile">
+          <img src="<%= post.author.profile_image %>" alt="Profile picture of Keith Poncardas" class="rounded-circle shadow-sm border border-primary border-2 me-3" height="42" width="42" loading="lazy" decoding="async" />
+        </a>
+
+        <!-- Author Info -->
+        <div>
+          <h5 class="card-title fs-6 m-0" id="post-author">
+            <%= post.author.firstname %> <%= post.author.lastname %>
+            <% if (user && post.author && post.author._id?.toString() === user._id?.toString()) { %>
+            <span class="badge badge-info">You</span>
+            <% } %>
+
+          </h5>
+
+          <time class="card-subtitle text-muted small" datetime="2025-03-29"><%= timeAgo(post.createdAt) %></time>
+        </div>
+
+
+        <!-- Dropdown Actions -->
+        <div class="ms-auto">
+
+          <!-- <button type="button" class="btn btn-link btn-sm" data-mdb-ripple-init data-mdb-ripple-color="dark" data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="edit-post" data-title="Edit Post" data-id="<%= post._id %>" data-content="<%= post.description %>">Edit</button> -->
+
+          <% if (user && post?.author && post.author._id?.toString() === user._id?.toString()) { %>
+          <div class="dropdown">
+            <button class="btn btn-link btn-sm" type="button" id="dropdownMenuButton" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false">
+              Action
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><button class="btn btn-link btn-sm dropdown-item" data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="edit-post" data-title="Edit Post" data-id="<%= post._id %>" data-content="<%= post.description %>" data-image="<%= post.post_image %>">Edit</button></li>
+              <li><button class="btn btn-link btn-sm dropdown-item deleteButton" data-action="delete-post" data-id="<%= post._id %>">Delete</button></li>
+            </ul>
+          </div>
+          <% } %>
+
+        </div>
+      </div>
+
+      <!-- Post Content -->
+      <p style="cursor: pointer;" onclick="window.location = `/home/<%= post._id %>/view`" class="card-text my-3">
+        <%= post.description %>
+      </p>
+
+      <% if (post.post_image) { %>
+      <img src="<%= post.post_image %>" class="img-fluid rounded-3 shadow" style="width: 100%; height: 380px; object-fit: cover;" alt="<%= post.description %>" />
+      <% } %>
+
+
+      <hr class="my-3">
+
+      <!-- Post Actions -->
+      <div class="d-flex gap-2">
+
+        <%- include('./interactionButton', { post }) %>
+
+      </div>
+
+    </div>
+  </div>
+</div>

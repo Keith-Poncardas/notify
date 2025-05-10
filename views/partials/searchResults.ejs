@@ -1,0 +1,11 @@
+<% if (searchResults.length === 0) { %>
+<%- include('../partials/emptyState', { icon: 'fas fa-search', text: 'No matching results found for', subtext: 'Try adjusting your search terms or filters', bold: searchTxt }); %>
+<% } else { %>
+<% searchResults.forEach((searchItem) => { %>
+<% if (searchItem.type === 'user') { %>
+<%- include('./userCard', { user: searchItem }) %>
+<% } else if (searchItem.type === 'post') { %>
+<%- include('./postCard', { post: searchItem, isDisabled: false }) %>
+<% } %>
+<% }) %>
+<% } %>

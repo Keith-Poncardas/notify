@@ -1,0 +1,42 @@
+<% const dropdownLinks = [
+{
+  label: 'My Profile',
+  location: `/home/${user._id}/profile`,
+  icon: 'fa-user-circle'
+},
+{
+  label: 'Setting',
+  location: '/setting',
+  icon: 'fa-cog'
+}
+] %>
+
+<div class="dropdown">
+
+  <!-- Avatar -->
+  <%- include('./avatar', { user, dropdown: true }) %>
+
+  <!-- Dropdown Menu -->
+  <ul class="dropdown-menu dropdown-menu-end shadow-sm mt-2" aria-labelledby="navbarDropdownMenuAvatar">
+
+    <% dropdownLinks.forEach(item => { %>
+    <li>
+      <a class="dropdown-item py-2" href="<%= item.location %>">
+        <i class="fas <%= item.icon %> me-2"></i> <%= item.label %>
+      </a>
+    </li>
+    <% }) %>
+
+    <li>
+      <hr class="dropdown-divider" />
+    </li>
+
+    <li>
+      <a class="dropdown-item py-2" id="logoutBtn" style="cursor: pointer;">
+        <i class="fas fa-sign-out-alt me-2"></i> Logout
+      </a>
+    </li>
+
+  </ul>
+
+</div>

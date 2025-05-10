@@ -1,0 +1,36 @@
+<div class="d-flex align-items-start">
+  <!-- User Avatar Outside the Card -->
+  <a href="/home/<%= comment.author._id %>/profile" class="me-3">
+    <img src="<%= comment.author.profile_image %>" class="rounded-circle shadow-sm border border-primary border-2" height="40" width="40" alt="Keith Poncardas' Profile Picture" loading="lazy" />
+  </a>
+
+  <!-- Comment Card -->
+  <div class="card p-3 bg-body-tertiary mb-3 w-100">
+    <div class="d-flex align-items-start">
+      <!-- User Name & Comment -->
+      <div class="flex-grow-1">
+        <h6 class="card-title fs-6 mb-1" id="post-author"><%= comment.author.firstname %> <%= comment.author.lastname %></h6>
+        <p class="mb-0 text-muted" id="comment-text">
+          <%= comment.content %>
+        </p>
+      </div>
+
+      <!-- Ellipsis Button -->
+
+      <% if (user && comment?.author && comment.author._id?.toString() === user._id?.toString()) { %>
+      <div class="ms-auto">
+        <div class="dropdown d-inline-block">
+          <button class="btn btn-link text-muted btn-sm" data-mdb-dropdown-init aria-expanded="false">
+            <i class="fas fa-ellipsis-v"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+            <li><button class="dropdown-item" data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="edit-comment" data-title="Edit Comment" data-id="<%= comment._id %>" data-content="<%= comment.content %>"><i class="fas fa-edit me-2"></i>Edit</button></li>
+            <li><button class="dropdown-item text-danger deleteButton" data-action="delete-comment" data-id="<%= comment._id %>"><i class="fas fa-trash me-2"></i>Delete</button></li>
+          </ul>
+        </div>
+      </div>
+      <% } %>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="card p-4 shadow-sm rounded-3 bg-body-tertiary mb-3">
+  <div class="card-header text-light fw-bold fs-5">Edit Profile</div>
+  <div class="card-body">
+    <form>
+      <!-- Name Fields -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" id="editFirstName" class="form-control border-0 rounded-4" value="<%= user.firstname %>" />
+        </div>
+        <div class="col-md-6">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" id="editlastName" class="form-control border-0 rounded-4" value="<%= user.lastname %>" />
+        </div>
+      </div>
+
+      <!-- Username -->
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <input type="text" id="editUsername" class="form-control border-0 rounded-4" value="<%= user.username %>" />
+      </div>
+
+      <!-- Password -->
+      <!-- <div class="mb-3">
+        <label for="password" class="form-label">New Password</label>
+        <input type="password" id="editPassword" class="form-control border-0 rounded-4" placeholder="Enter new password" />
+      </div> -->
+
+      <!-- Profile Image -->
+      <div class="mb-3 d-flex">
+        <div class="mt-2 me-3">
+          <img id="profilePreview" src="<%= user.profile_image %>" alt="Profile Preview" class="rounded-circle border border-3 border-primary p-1" width="60" height="60" />
+        </div>
+        <div class="flex-grow-1">
+          <label class="form-label">Profile Image</label>
+          <div class="d-flex gap-2">
+            <input type="url" id="editProfileImageUrl" class="form-control border-0 rounded-4" placeholder="Or enter image URL" value="<%= user.profile_image %>" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Link -->
+      <div class="mb-3">
+        <label for="socialLink" class="form-label">Social Link (Optional)</label>
+        <input type="url" id="editSocialLink" class="form-control border-0 rounded-4" value="Not available" disabled />
+      </div>
+
+      <!-- Bio -->
+      <div class="mb-3">
+        <label for="bio" class="form-label">Bio</label>
+        <textarea id="editBio" class="form-control border-0 rounded-4" rows="3"><%= user.bio %></textarea>
+      </div>
+
+      <input id="userIdEdit" type="hidden" value="<%= user._id %>">
+
+      <!-- Buttons -->
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-outline-secondary" onclick="history.back()">Cancel</button>
+        <button id="saveChanges" type="submit" class="btn btn-primary">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>

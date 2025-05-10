@@ -1,0 +1,47 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm">
+  <div class="container-fluid">
+
+    <!-- Brand -->
+    <%- include('./brand', { src: '/public/img/brand.png', location: '/' }); %>
+
+    <!-- Toggle Button -->
+    <% if (user) { %>
+    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <i class="fas fa-bars fa-lg"></i>
+    </button>
+    <% } %>
+
+    <!-- Collapsible Wrapper -->
+    <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navbarSupportedContent">
+
+      <!-- Search Form -->
+      <% if (user) { %>
+      <%- include('./searchForm', { placeholder: 'Search' }); %>
+      <% } %>
+
+      <!-- Spacer for layout -->
+      <div class="ms-auto d-none d-lg-block"></div>
+    </div>
+
+
+    <!-- Right Elements -->
+    <div class="d-flex align-items-center ms-auto ms-lg-0">
+
+      <!-- Avatar Dropdown -->
+      <% if (user) { %>
+      <%- include('./avatarDropdown') %>
+      <% } else { %>
+
+      <button data-mdb-ripple-init type="button" class="btn btn-sm btn-link px-3 me-2" data-mdb-toggle="modal" data-mdb-target="#loginModal" data-mdb-modal-init role="button">
+        Login
+      </button>
+      <button data-mdb-ripple-init type="button" class="btn btn-sm btn-primary me-3" data-mdb-toggle="modal" data-mdb-target="#signupModal" data-mdb-modal-init role="button">
+        Sign up
+      </button>
+
+      <% } %>
+
+    </div>
+
+  </div>
+</nav>

@@ -1,0 +1,60 @@
+<!-- Sign Up Modal (MDB Version) -->
+<div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content bg-body-tertiary rounded-5 shadow-4">
+
+      <!-- Modal Header -->
+      <div class="modal-header border-0">
+        <h5 class="modal-title text-info fw-bold" id="signupModalLabel">Create Account</h5>
+        <button type="button" class="btn-close" data-mdb-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <!-- Modal Body -->
+      <div class="modal-body px-4">
+
+        <p class="text-muted text-center mb-4">Join our community and start connecting with others!</p>
+
+        <form>
+
+          <div class="row">
+            <div class="col-md-6 mb-4">
+              <div data-mdb-input-init class="form-outline">
+                <input type="text" id="firstName" class="form-control" />
+                <label class="form-label" for="firstName">First Name</label>
+              </div>
+            </div>
+            <div class="col-md-6 mb-4">
+              <div data-mdb-input-init class="form-outline">
+                <input type="text" id="lastName" class="form-control" />
+                <label class="form-label" for="lastName">Last Name</label>
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <div data-mdb-input-init class="form-outline">
+              <input type="text" id="username" class="form-control" />
+              <label class="form-label" for="username">Username</label>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <div data-mdb-input-init class="form-outline">
+              <input type="password" id="password" class="form-control" />
+              <label class="form-label" for="password">Password</label>
+            </div>
+          </div>
+
+        </form>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer border-0 px-4 pb-4">
+        <button id="signupModalSubmitBtn" type="button" class="btn btn-info w-100" data-mdb-ripple-init>
+          Sign Up
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

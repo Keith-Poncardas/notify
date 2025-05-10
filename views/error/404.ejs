@@ -1,0 +1,11 @@
+<% layout('layout/main') %>
+
+<div class="container text-center mt-5">
+  <div class="alert alert-danger p-4" role="alert">
+    <h1 class="display-4 mb-3">Error <%= statusCode %></h1>
+    <h2 class="mb-3"><%= message %></h2>
+    <p class="lead">The page you're looking for might have been moved or doesn't exist.</p>
+    <hr>
+    <a href="/" class="btn btn-outline-danger mt-3">Return to Homepage</a>
+  </div>
+</div>
