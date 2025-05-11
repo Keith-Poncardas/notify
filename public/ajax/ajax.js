@@ -1,4 +1,11 @@
 
+if (typeof $ === 'undefined') {
+    alert('jQuery is NOT loaded');
+} else {
+    console.log('jQuery is loaded');
+}
+
+
 const notyf = new Notyf();
 
 /**
