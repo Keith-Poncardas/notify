@@ -37,55 +37,57 @@ function initializedToaster(storageName, toastType = 'success', message = null) 
 /**
  * Show multipurpose modal based on actions and collect data on it
  */
-$('#actionModal').on('show.bs.modal', function (event) {
-    const button = $(event.relatedTarget);
-    const action = button.data('action');
-    const title = button.data('title');
-    const content = button.data('content') || '';
-    const id = button.data('id') || '';
-    const userId = button.data('user-id');
-    const image = button.data('image');
+$(document).ready(function () {
+    $('#actionModal').on('show.bs.modal', function (event) {
+        const button = $(event.relatedTarget);
+        const action = button.data('action');
+        const title = button.data('title');
+        const content = button.data('content') || '';
+        const id = button.data('id') || '';
+        const userId = button.data('user-id');
+        const image = button.data('image');
 
 
-    const preview = $('#imagePreview');
+        const preview = $('#imagePreview');
 
-    if (action === 'create-post') {
-        preview.addClass('d-none');
-        preview.attr('src', '');
-    };
-
-    if (action === 'edit-post') {
-        if (image) {
-            preview.removeClass('d-none');
-            preview.attr('src', image);
-        } else {
+        if (action === 'create-post') {
             preview.addClass('d-none');
             preview.attr('src', '');
+        };
+
+        if (action === 'edit-post') {
+            if (image) {
+                preview.removeClass('d-none');
+                preview.attr('src', image);
+            } else {
+                preview.addClass('d-none');
+                preview.attr('src', '');
+            }
+        };
+
+        $('#modalTitle').text(title);
+        $('#modalContent').val(content);
+        $('#modalAction').val(action);
+        $('#modalItemId').val(id);
+        $('#modalItemUserId').val(userId);
+
+        validateModalInput();
+    });
+
+    $('#actionModal').on('input', '#modalContent', function () {
+        validateModalInput();
+    });
+
+    function validateModalInput() {
+        const inputVal = $('#modalContent').val()?.trim();
+
+        if (!inputVal) {
+            $('#modalSubmitButton').attr('disabled', true);
+        } else {
+            $('#modalSubmitButton').attr('disabled', false);
         }
-    };
-
-    $('#modalTitle').text(title);
-    $('#modalContent').val(content);
-    $('#modalAction').val(action);
-    $('#modalItemId').val(id);
-    $('#modalItemUserId').val(userId);
-
-    validateModalInput();
-});
-
-$('#actionModal').on('input', '#modalContent', function () {
-    validateModalInput();
-});
-
-function validateModalInput() {
-    const inputVal = $('#modalContent').val()?.trim();
-
-    if (!inputVal) {
-        $('#modalSubmitButton').attr('disabled', true);
-    } else {
-        $('#modalSubmitButton').attr('disabled', false);
     }
-}
+});
 
 /**
  * Image loader
