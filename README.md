@@ -1,6 +1,6 @@
 # Notify (Simple Social Media App)
 
-Notify is a hobby project built using **Jquery** **Express.js**, **EJS**, and **MongoDB**. This app serves as a simple social media application built by **Keith Poncardas**.
+Notify is a hobby project built using **Jquery**, **Express.js**, **EJS**, **CLOUDINARY**, and **MongoDB**. This app serves as a simple social media application built by **Keith Poncardas**.
 
 ## Features
 - Express.js for backend handling
