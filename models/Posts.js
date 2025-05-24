@@ -4,6 +4,8 @@ const logger = require('../utils/logger');
 const Comments = require('./Comments');
 const Likes = require('./Likes');
 
+const cloudinary = require('cloudinary').v2;
+
 /**
  * Schema definition for Posts
  * @typedef {Object} PostSchema
@@ -51,12 +53,16 @@ postSchema.post('findOneAndDelete', async function (doc) {
 postSchema.post('findOneAndDelete', async function (doc) {
     if (doc?.public_id) {
         try {
-            await cloudinary.uploader.destroy(doc.public_id);
-            logger.success('Image deleted from Cloudinary');
+            console.log('Attempting to delete image with public_id:', doc.public_id); // for debugging
+            const result = await cloudinary.uploader.destroy(doc.public_id);
+            console.log('Cloudinary response:', result);
         } catch (error) {
-            logger.error('Failed to delete image from Cloudinary:', error);
+            console.error('Failed to delete image from Cloudinary:', error.message || error);
         }
+    } else {
+        console.warn('No public_id found in the deleted document.');
     }
 });
+
 
 module.exports = model('Post', postSchema);

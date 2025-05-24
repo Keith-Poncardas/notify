@@ -1,6 +1,12 @@
 const Likes = require("../models/Likes");
 const { NotifyError } = require("../utils/notifyError")
 
+/**
+ * Retrieves all likes associated with a specific post
+ * @param {string|ObjectId} postId - The ID of the post to get likes for
+ * @returns {Promise<Array>} A promise that resolves to an array of like objects
+ * @throws {NotifyError} If there's an error retrieving the likes
+ */
 const getAllLikesById = async (postId) => {
     try {
         const likes = await Likes.find({ post: postId }).lean();
@@ -10,6 +16,13 @@ const getAllLikesById = async (postId) => {
     }
 };
 
+/**
+ * Checks if a user has liked a specific post
+ * @param {string} userId - The ID of the user
+ * @param {string} postId - The ID of the post
+ * @returns {Promise<Object|null>} The like document if found, null otherwise
+ * @throws {NotifyError} When required fields are missing or other errors occur
+ */
 const findLike = async (userId, postId) => {
     try {
         if (!userId || !postId) {
@@ -24,6 +37,12 @@ const findLike = async (userId, postId) => {
     }
 };
 
+/**
+ * Counts the number of likes for a specific post
+ * @param {string} postId - The ID of the post to count likes for
+ * @returns {Promise<number>} The total number of likes for the post
+ * @throws {NotifyError} When postId is missing or database operation fails
+ */
 const countLike = async (postId) => {
     try {
         if (!postId) {

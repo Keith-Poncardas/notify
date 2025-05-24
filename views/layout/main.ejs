@@ -2,27 +2,7 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- ✅ jQuery FIRST -->
-  <script src="/public/js/jquery.min.js"></script>
-
-  <!-- MDB CSS -->
-  <link rel="stylesheet" href="/public/css/mdb.min.css">
-
-  <!-- Font Awesome -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-
-  <!-- CDN -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
-
-
-  <title>Notify</title>
+  <%- include('../partials/head', { meta }) %>
 </head>
 
 <body data-mdb-theme="dark">
@@ -39,7 +19,6 @@
   <%- include('../partials/loginModal'); %>
   <%- include('../partials/signupModal'); %>
   <%- include('../partials/multipurposeModal'); %>
-
 
 
   <!-- Then MDB and your custom scripts -->

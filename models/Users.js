@@ -39,6 +39,10 @@ const userSchema = new Schema({
         type: String,
         default: null
     },
+    public_id: {
+        type: String,
+        default: null
+    },
     bio: {
         type: String,
         default: null

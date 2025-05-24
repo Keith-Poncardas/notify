@@ -1,11 +1,30 @@
 <% if (searchResults.length === 0) { %>
-<%- include('../partials/emptyState', { icon: 'fas fa-search', text: 'No matching results found for', subtext: 'Try adjusting your search terms or filters', bold: searchTxt }); %>
+<%- include('../partials/emptyState', {
+    icon: 'fas fa-search',
+    text: 'No matching results found for',
+    subtext: 'Try adjusting your search terms or filters',
+    bold: searchTxt
+  }); %>
 <% } else { %>
-<% searchResults.forEach((searchItem) => { %>
-<% if (searchItem.type === 'user') { %>
-<%- include('./userCard', { user: searchItem }) %>
-<% } else if (searchItem.type === 'post') { %>
-<%- include('./postCard', { post: searchItem, isDisabled: false }) %>
-<% } %>
+
+<% users.forEach((user) => { %>
+<%- include('./userCard', { user }) %>
 <% }) %>
+
+<% if (users.length > 0) { %>
+<div class="text-center my-4">
+  <a href="/home/users?search=<%= searchTxt %>" class="btn btn-primary w-100">View more users</a>
+</div>
+<% } %>
+
+<% posts.forEach((post) => { %>
+<%- include('./postCard', { post, isDisabled: false, isExpand: false }) %>
+<% }) %>
+
+<% if (posts.length > 0) { %>
+<div class="text-center my-4">
+  <a href="/home?search=<%= searchTxt %>" class="btn btn-primary w-100">View more posts</a>
+</div>
+<% } %>
+
 <% } %>

@@ -1,3 +1,12 @@
+<% if (users.length !== 0) { %>
 <% users.forEach((user) => { %>
 <%- include('./userCard', { user }) %>
 <% }) %>
+<% } else { %>
+<%- include('../partials/emptyState', {
+    icon: 'fas fa-user',
+    text: 'No users found.',
+    subtext: 'Try adjusting your search terms or filters',
+    bold: searchTxt
+  }); %>
+<% } %>

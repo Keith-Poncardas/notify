@@ -20,6 +20,7 @@ const { timeFormatterGlobal } = require('./utils/timeFormatter');
 const authenticateUser = require('./middleware/authenticate');
 const cookieParser = require('cookie-parser');
 const requireAuth = require('./middleware/authenticateRoute');
+const seoBuilder = require('./utils/seoBuilder');
 
 const PORT = process.env.PORT || 3000;
 
@@ -35,7 +36,8 @@ app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(methodOverride('_method'));
 app.use(express.json());
-// app.use(minifyHTML);
+app.use(minifyHTML);
+app.use(seoBuilder.middleware());
 
 app.use(timeFormatterGlobal);
 

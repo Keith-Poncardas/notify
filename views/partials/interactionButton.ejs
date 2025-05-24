@@ -1,4 +1,4 @@
-<div class="btn-group btn-group-md shadow-0 w-100" role="group" aria-label="Basic example">
+<div class="btn-group btn-group-sm shadow-0 w-100" role="group" aria-label="Basic example">
 
   <button type="button" class="btn btn-outline-secondary flex-fill like-btn <%= post.isLikedByUser ? 'liked active' : '' %>" data-mdb-color="dark" data-post-id="<%= post._id %>" data-mdb-ripple-init <% if (!user) { %> disabled <% } %>>
     <i class="fas <%= post.isLikedByUser ? 'fa-thumbs-down' : 'fa-thumbs-up' %> me-1"></i>
@@ -9,13 +9,14 @@
   <button onclick="window.location = '/home/<%= post._id %>/view'" type="button" class="btn btn-outline-secondary flex-fill" data-mdb-color="dark" data-mdb-ripple-init <% if (!user || isDisabled) { %> disabled <% } %>>
     <i class="fa-solid fa-comment me-1"></i>
     Comments
-    <span class="badge badge-primary ms-1">1k</span>
+    <span class="badge badge-primary ms-1"><%= post.commentCount %></span>
     </a>
+  </button>
 
-    <button type="button" class="btn btn-outline-secondary flex-fill" data-mdb-color="dark" data-mdb-ripple-init <% if (!user) { %> disabled <% } %>>
-      <i class="fa-solid fa-share me-1"></i>
-      Share
-      <span class="badge badge-primary ms-1">234</span>
-    </button>
+  <!-- <button type="button" class="btn btn-outline-secondary flex-fill" data-mdb-color="dark" data-mdb-ripple-init <% if (!user) { %> disabled <% } %>>
+    <i class="fa-solid fa-share me-1"></i>
+    Share
+    <span class="badge badge-primary ms-1">0</span>
+  </button> -->
 
 </div>

@@ -1,3 +1,12 @@
+<% if (comments.length !== 0) { %>
 <% comments.forEach((comment) => { %>
 <%- include('./commentCard', { comment }); %>
 <% }) %>
+<% } else { %>
+<%- include('./emptyState', { 
+  icon: 'fa fa-comment', 
+  text: 'No comments yet', 
+  subtext: 'Be the first to share your thoughts on this post.', 
+  bold: false 
+}); %>
+<% } %>

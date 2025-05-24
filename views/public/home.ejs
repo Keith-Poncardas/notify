@@ -6,3 +6,7 @@
 <%- include('../partials/sectionLabel', { icon: 'fa-solid fa-rss', title: 'Newsfeed' }) %>
 
 <%- include('../partials/postsLoop', { posts }); %>
+
+<% if (posts.length !==  0) { %>
+<%- include('../partials/pagination', { currentPage, totalPages, path: 'home' }) %>
+<% } %>

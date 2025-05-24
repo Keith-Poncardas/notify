@@ -1,15 +1,8 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary sticky-top shadow-sm">
-  <div class="container-fluid">
+  <div class="container">
 
     <!-- Brand -->
     <%- include('./brand', { src: '/public/img/brand.png', location: '/' }); %>
-
-    <!-- Toggle Button -->
-    <% if (user) { %>
-    <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fas fa-bars fa-lg"></i>
-    </button>
-    <% } %>
 
     <!-- Collapsible Wrapper -->
     <div class="collapse navbar-collapse mt-2 mt-lg-0" id="navbarSupportedContent">
@@ -29,6 +22,9 @@
 
       <!-- Avatar Dropdown -->
       <% if (user) { %>
+      <a class="text-muted me-3" href="/home/users">
+        <i class="fas fa-users"></i>
+      </a>
       <%- include('./avatarDropdown') %>
       <% } else { %>
 

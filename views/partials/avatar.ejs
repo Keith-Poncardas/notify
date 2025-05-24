@@ -1,5 +1,5 @@
 <% if (user) { %>
 <a class="d-flex align-items-center hidden-arrow <%= dropdown ? 'dropdown-toggle' : '' %>" href="/home/<%= user._id %>/profile" <%= dropdown ? 'id="navbarDropdownMenuAvatar" data-mdb-dropdown-init aria-expanded="false"' : '' %> role="button">
-  <img src="<%= user.profile_image %>" class="rounded-circle shadow-sm border border-primary border-2 p-1" width="35" height="35" style="object-fit: cover;" alt="<%= user.firstname %>'s profile" loading="lazy" />
+  <img src="<%= user.profile_image %>" class="rounded-circle shadow-sm border border-primary border-2" width="35" height="35" style="object-fit: cover;" alt="<%= user.firstname %>'s profile" loading="lazy" />
 </a>
 <% } %>

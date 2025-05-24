@@ -47,7 +47,15 @@
 
       <!-- Post Content -->
       <p style="cursor: pointer;" onclick="window.location = `/home/<%= post._id %>/view`" class="card-text my-3">
+        <% if (!isExpand) { %>
+        <% if (post.description.length < 170) { %>
         <%= post.description %>
+        <% } else { %>
+        <%= post.description.substring(0, 170) %>... <span class="fw-bold text-primary">See more</span>
+        <% } %>
+        <% } else { %>
+        <%= post.description %>
+        <% } %>
       </p>
 
       <% if (post.post_image) { %>

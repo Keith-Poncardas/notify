@@ -1,7 +1,7 @@
 <% layout('layout/main') %>
 
 <%- include('../partials/sectionLabel', { icon: 'fa-regular fa-file-lines', title: 'Post' }) %>
-<%- include('../partials/postCard', { post, isDisabled: true }) %>
+<%- include('../partials/postCard', { post, isDisabled: true, isExpand: true }) %>
 <%- include('../partials/postInput', { placeholder:"Comment as", dataAction: 'create-comment', dataTitle: 'Comment', dataId: post._id }) %>
 <%- include('../partials/sectionLabel', { icon: 'fa-regular fa-comments', title: 'Comments' }) %>
 

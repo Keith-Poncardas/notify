@@ -1,5 +1,20 @@
 const Comments = require("../models/Comments");
-const { NotifyError } = require("../utils/notifyError")
+const { NotifyError } = require("../utils/notifyError");
+
+/**
+ * Retrieves all comments associated with a specific post
+ * @param {string} postId - The ID of the post to fetch comments for
+ * @returns {Promise<Array>} A promise that resolves to an array of comment documents
+ * @throws {NotifyError} If there is an error retrieving the comments
+ */
+const getAllCommentsById = async (postId) => {
+    try {
+        const comments = await Comments.find({ post: postId }).lean();
+        return comments;
+    } catch (err) {
+        throw new NotifyError(err.message);
+    }
+};
 
 /**
  * Creates a new comment for a post
@@ -138,5 +153,6 @@ module.exports = {
     createComment,
     editComment,
     getComments,
-    deleteComment
+    deleteComment,
+    getAllCommentsById
 };

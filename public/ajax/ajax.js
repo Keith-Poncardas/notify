@@ -5,7 +5,6 @@ if (typeof $ === 'undefined') {
     console.log('jQuery is loaded');
 }
 
-
 const notyf = new Notyf();
 
 /**
@@ -341,6 +340,9 @@ $('#signupModalSubmitBtn').on('click', function () {
 
             setToaster('signup', `Welcome @${username}!`);
         },
+        onError: (err) => {
+            notyf.error(err.responseJSON.error);
+        },
         reloadOnSuccess: true,
         modal,
         button
@@ -357,30 +359,6 @@ $('#loginSubmitButton').on('click', function () {
     const username = $('#loginUsername').val().trim();
     const password = $('#loginPassword').val().trim();
 
-    const alertBox = $('#loginAlertContainer');
-    alertBox.html('').prop("disabled", true); // Clear and hide alert box initially
-
-    const validateUsn = $('#loginUsername');
-    const validatePass = $('#loginPassword');
-
-    let isValid = true;
-
-    if (username === '') {
-        validateUsn.addClass('is-invalid');
-        isValid = false;
-    } else {
-        validateUsn.removeClass('is-invalid');
-    }
-
-    if (password === '') {
-        validatePass.addClass('is-invalid');
-        isValid = false;
-    } else {
-        validatePass.removeClass('is-invalid');
-    }
-
-    if (!isValid) return;
-
     const button = $(this);
 
     const modal = mdb.Modal.getInstance(document.getElementById('loginModal'));
@@ -395,12 +373,7 @@ $('#loginSubmitButton').on('click', function () {
             setToaster('loginSuccess', `Welcome back @${username}`);
         },
         onError: (error) => {
-            const errorMessage = error.responseJSON?.loginError || 'An unexpected error occurred.';
-            // alertBox.html(`
-            //     <div class="alert alert-danger" role="alert">
-            //         ${errorMessage}
-            //     </div>
-            // `).prop("disabled", false);
+            const errorMessage = error.responseJSON?.error || 'An unexpected error occurred.';
             notyf.error(errorMessage);
         },
         modal,
@@ -442,30 +415,41 @@ $('#saveChanges').on('click', function () {
     const lastname = $('#editlastName').val();
     const username = $('#editUsername').val();
     const bio = $('#editBio').val();
-    const profile_image = $('#editProfileImageUrl').val();
+    const profile_image = $('#profileImageInput')[0]?.files[0];
 
     const button = $(this);
+
+    const profileFormData = new FormData();
+
+    profileFormData.append('firstname', firstname);
+    profileFormData.append('lastname', lastname);
+    profileFormData.append('username', username);
+    profileFormData.append('bio', bio);
+
+    if (profile_image) {
+        profileFormData.append('profileImage', profile_image);
+    };
 
     handleAjax({
         url: '/private/edit-user',
         method: 'PUT',
-        data: {
-            userId,
-            firstname,
-            lastname,
-            username,
-            bio,
-            profile_image
-        },
+        data: profileFormData,
         onSuccess: () => {
             window.location = `/home/${userId}/profile`;
             setToaster('editProfile', 'Profile saved!');
         },
+        onError: (error) => {
+            const errorMessage = error.responseJSON?.error || 'An unexpected error occurred.';
+            notyf.error(errorMessage);
+        },
         reloadOnSuccess: false,
-        button
+        button,
+        contentType: false,
+        processData: false
     });
 
 });
+
 
 initializedToaster('editProfile', 'success');
 

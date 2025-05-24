@@ -16,7 +16,7 @@
       <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center">
         <div class="mb-3 mb-md-0">
           <h3 class="mb-1"><%= viewUser.firstname %> <%= viewUser.lastname %></h3>
-          <p class="text-muted mb-2"><%= posts.length || 0 %> Posts</p>
+          <p class="text-muted mb-2"><%= totalDocuments || 0 %> Posts</p>
         </div>
 
         <% if (user?._id && viewUser?._id && user._id.toString() === viewUser._id.toString()) { %>
