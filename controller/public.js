@@ -65,10 +65,13 @@ const seePost = async (req, res, next) => {
 
         const postWithLikes = await enrichPostWithLikes(post, user);
 
+        console.log(post.post_image);
+
         res.locals.seo.add(res, {
             title: `${post.description.substring(0, 25)} - (@${post.author.username})`,
             description: post.description,
-            image: post.post_image
+            image: post.post_image,
+            twitterCard: post.post_image
         });
 
         res.render('public/view', { post: postWithLikes, comments });
