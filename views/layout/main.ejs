@@ -10,23 +10,23 @@
   <%- include('../partials/navbar') %>
 
   <main class="container-md mt-3" style="max-width: 650px;">
-
     <%- body %>
-
   </main>
-
 
   <%- include('../partials/loginModal'); %>
   <%- include('../partials/signupModal'); %>
   <%- include('../partials/multipurposeModal'); %>
 
+  <!-- ✅ Include jQuery FIRST -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <!-- Then MDB and your custom scripts -->
-  <script src="/public/js/mdb.es.min.js"></script>
-  <script src="/public/js/mdb.umd.min.js"></script>
+  <script src="/js/mdb.es.min.js"></script>
+  <script src="/js/mdb.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.1/mdb.min.js"></script>
 
-  <script src="/public/ajax/ajax.js"></script>
+  <!-- ✅ Then your AJAX script -->
+  <script src="/ajax/ajax.js"></script>
 
 </body>
 
