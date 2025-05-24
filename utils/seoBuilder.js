@@ -3,7 +3,7 @@ class SeoBuilder {
 
     constructor() {
         this.defaultMeta = {
-            title: 'Connect & Share with People on Notify',
+            title: 'Notify',
             description: 'Notify is a social media platform where you can connect with friends, share updates, photos, and stay informed. Join Notify today and be part of a growing community.',
             keywords: 'social media, connect, share, friends, updates, Notify, photos, community',
             url: 'https://notifyapp.vercel.app/',

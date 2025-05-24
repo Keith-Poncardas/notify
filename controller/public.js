@@ -111,9 +111,9 @@ const viewProfile = async (req, res, next) => {
         res.locals.seo.add(res, {
             title: `${viewUser.firstname} ${viewUser.lastname} (@${viewUser.username})`,
             description: viewUser.bio || `Hi peeps I'm ${viewUser.firstname}!`,
-            image: viewUser.profile_image[0] || "https://i.ibb.co/7dDktDc5/bookifyph-vercel-app.png",
-            url: `https://bookifyph.vercel.app/home/${viewUser._id}/profile`,
-            twitterCard: viewUser.profile_image[0] || "https://i.ibb.co/7dDktDc5/bookifyph-vercel-app.png"
+            image: viewUser.profile_image || null,
+            url: `https://notify-blond.vercel.app/home/${viewUser._id}/profile`,
+            twitterCard: viewUser.profile_image[0] || null
         });
 
         res.render('public/profile', {
