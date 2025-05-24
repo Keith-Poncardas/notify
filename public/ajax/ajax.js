@@ -1,11 +1,9 @@
 
-if (typeof $ === 'undefined') {
-    alert('jQuery is NOT loaded');
-} else {
-    console.log('jQuery is loaded');
-}
-
 const notyf = new Notyf();
+
+if (typeof $ === 'undefined') {
+    notyf.error(`Jquery is not loaded properly, not compatible in vercel.`);
+};
 
 /**
  * Set toaster data item on local storage for access after reload
