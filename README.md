@@ -11,6 +11,9 @@ Notify is a hobby project built using **Jquery**, **Express.js**, **EJS**, **CLO
 - Authentication with JWT
 - Basic CRUD operations
 
+## DATABASE DESIGN (ERD)
+![ERD](db_erd.png)
+
 ## Installation
 1. **Clone the repository:**
    ```sh
