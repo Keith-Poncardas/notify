@@ -300,6 +300,31 @@ $('.deleteButton').on('click', function (event) {
                     setToaster('deleteComment', 'Comment deleted!');
                 }
             });
+        },
+        'delete-profile': () => {
+            let confirmation = prompt('Are you sure you want to delete your profile? YES / NO');
+
+            if (confirmation === null) return;
+
+            confirmation = confirmation.trim().toLowerCase();
+
+            if (confirmation === 'yes') {
+                handleAjax({
+                    url: `/private/${id}/delete-profile`,
+                    method: 'DELETE',
+                    data: { id },
+                    button,
+                    onSuccess: () => {
+                        setToaster('deleteProfile', 'Profile deleted!');
+                    }
+                });
+            } else if (confirmation === 'no') {
+                alert("Okieee dokieee!");
+                return;
+            } else {
+                alert('Invalid response.');
+            }
+
         }
     }
 
@@ -313,6 +338,7 @@ $('.deleteButton').on('click', function (event) {
 
 initializedToaster('deletePost', 'success');
 initializedToaster('deleteComment', 'success');
+initializedToaster('deleteProfile', 'success');
 
 /**
  * Signup for submission

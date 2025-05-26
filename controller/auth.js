@@ -1,4 +1,4 @@
-const { createUser, loginUser } = require("../services/userService");
+const { createUser, loginUser, deleteUser } = require("../services/userService");
 const generateToken = require("../utils/generateToken");
 const { NotifyError } = require("../utils/notifyError");
 
@@ -50,6 +50,16 @@ const createNewUser = async (req, res, next) => {
     }
 };
 
+const deleteProfile = async (req, res, next) => {
+    try {
+        console.log(req.params.id);
+        await deleteUser(req.params.id);
+        res.redirect('/');
+    } catch (err) {
+        next(err);
+    }
+};
+
 /**
  * Logs out the user by clearing the authentication token cookie
  * @param {import('express').Request} req - Express request object
@@ -66,4 +76,4 @@ const logoutUser = (req, res) => {
     res.status(200).json({ message: 'Logged Out' });
 };
 
-module.exports = { createNewUser, loginUserSession, logoutUser }; 
+module.exports = { createNewUser, loginUserSession, logoutUser, deleteProfile }; 
