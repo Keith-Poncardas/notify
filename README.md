@@ -12,7 +12,7 @@ Notify is a hobby project built using **Jquery**, **Express.js**, **EJS**, **CLO
 - Basic CRUD operations
 
 ## DATABASE DESIGN (ERD)
-![ERD](db_erd.png)
+![ERD](ERD.png)
 
 ## Installation
 1. **Clone the repository:**
