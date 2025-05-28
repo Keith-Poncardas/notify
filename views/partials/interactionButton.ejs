@@ -6,7 +6,7 @@
     <span class="badge badge-primary ms-1 like-count"><%= post.likeCount %></span>
   </button>
 
-  <button onclick="window.location = '/home/<%= post._id %>/view'" type="button" class="btn btn-outline-secondary flex-fill" data-mdb-color="dark" data-mdb-ripple-init <% if (!user || isDisabled) { %> disabled <% } %>>
+  <button onclick="window.location = '/posts/<%= post._id %>/view'" type="button" class="btn btn-outline-secondary flex-fill" data-mdb-color="dark" data-mdb-ripple-init <% if (!user || isDisabled) { %> disabled <% } %>>
     <i class="fa-solid fa-comment me-1"></i>
     Comments
     <span class="badge badge-primary ms-1"><%= post.commentCount %></span>

@@ -21,7 +21,7 @@
 
         <% if (user?._id && viewUser?._id && user._id.toString() === viewUser._id.toString()) { %>
         <div class="d-flex flex-wrap gap-2">
-          <button class="btn btn-primary btn-sm btn-md" onclick="window.location = '/private/edit-profile'">
+          <button class="btn btn-primary btn-sm btn-md" onclick="window.location = '/<%= viewUser.username %>/edit'">
             <i class="fa fa-pencil me-2"></i> <span class="d-sm-inline">Edit profile</span>
           </button>
         </div>

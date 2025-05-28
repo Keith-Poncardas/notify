@@ -1,9 +1,13 @@
 <div class="card bg-body-tertiary p-3 mb-3">
   <div class="d-flex">
 
-    <a href="/home/<%= user._id %>/profile">
+    <!-- <a href="/home/<%= user._id %>/profile">
       <img src="<%= user.profile_image %>" class="rounded-circle shadow-sm border border-primary border-2 p-1 me-3" height="42" width="42" alt="Profile picture of Keith Poncardas" loading="lazy" decoding="async" />
-    </a>
+    </a> -->
+
+    <div class="me-3">
+      <%- include('./avatar', { user, dropdown: false, width: 42, height: 42 }) %>
+    </div>
 
     <div>
       <h5 class="card-title fs-6 m-0" id="post-author"><%= user.firstname %> <%= user.lastname %></h5>

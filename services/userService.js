@@ -119,6 +119,17 @@ const getUser = async (id) => {
     }
 };
 
+const getUserByUsername = async (username) => {
+    try {
+        if (!username) throw new NotifyError('Missing user Username');
+
+        const user = await User.findOne({ username });
+        return user;
+    } catch (err) {
+        throw new NotifyError(`Failed to retrieve user: ${err.message}`);
+    }
+};
+
 /**
  * Edits a user's information in the database.
  *
@@ -215,18 +226,18 @@ const getUsers = async (query) => {
  * @throws {NotifyError} If the user is not found.
  * @throws {NotifyError} If there is an error during the deletion process.
  */
-const deleteUser = async (id) => {
+const deleteUser = async (username) => {
     try {
 
         /**
-        * Validate if ID is missing
+        * Validate if username is missing
         */
-        if (!id) throw new NotifyError('Missing user ID');
+        if (!username) throw new NotifyError('Missing username');
 
         /**
-        * Find user by ID then delete, along with its associated data.
+        * Find user by username then delete, along with its associated data.
         */
-        const user = await User.findOneAndDelete({ _id: id });
+        const user = await User.findOneAndDelete({ username });
 
         /**
         * Throw error if user not found
@@ -246,5 +257,6 @@ module.exports = {
     getUser,
     editUser,
     getUsers,
-    deleteUser
+    deleteUser,
+    getUserByUsername
 };

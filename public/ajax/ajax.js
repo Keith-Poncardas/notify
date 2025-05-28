@@ -201,7 +201,7 @@ $('#modalSubmitButton').on('click', function () {
             if (postImage) formData.append('postImage', postImage);
 
             handleAjax({
-                url: '/private/create',
+                url: '/posts/create',
                 data: formData,
                 contentType: false,
                 processData: false,
@@ -220,7 +220,7 @@ $('#modalSubmitButton').on('click', function () {
             if (postImage) formData.append('postImage', postImage);
 
             handleAjax({
-                url: `/private/${id}/edit-post`,
+                url: `/posts/${id}/edit`,
                 method: 'PUT',
                 data: formData,
                 processData: false,
@@ -236,7 +236,7 @@ $('#modalSubmitButton').on('click', function () {
         'create-comment': () => {
 
             handleAjax({
-                url: `/private/${id}/create-comment`,
+                url: `/comments/${id}/new`,
                 data: { content, userId },
                 button,
                 modal,
@@ -246,7 +246,7 @@ $('#modalSubmitButton').on('click', function () {
         'edit-comment': () => {
 
             handleAjax({
-                url: `/private/${id}/edit-comment`,
+                url: `/comments/${id}/edit`,
                 method: 'PUT',
                 data: { content },
                 button: button,
@@ -275,10 +275,12 @@ $('.deleteButton').on('click', function (event) {
     const id = button.data('id');
     const action = button.data('action');
 
+    const username = button.data('usn');
+
     const actions = {
         'delete-post': () => {
             handleAjax({
-                url: `/private/${id}/delete-post`,
+                url: `/posts/${id}/delete`,
                 method: 'DELETE',
                 data: { id },
                 button,
@@ -292,7 +294,7 @@ $('.deleteButton').on('click', function (event) {
         },
         'delete-comment': () => {
             handleAjax({
-                url: `/private/${id}/delete-comment`,
+                url: `/comments/${id}/delete`,
                 method: 'DELETE',
                 data: { id },
                 button,
@@ -310,7 +312,7 @@ $('.deleteButton').on('click', function (event) {
 
             if (confirmation === 'yes') {
                 handleAjax({
-                    url: `/private/${id}/delete-profile`,
+                    url: `/${username}/delete`,
                     method: 'DELETE',
                     data: { id },
                     button,
@@ -354,7 +356,7 @@ $('#signupModalSubmitBtn').on('click', function () {
     const modal = mdb.Modal.getInstance(document.getElementById('signupModal'));
 
     handleAjax({
-        url: '/auth/create-user',
+        url: '/auth/new',
         data: { firstname, lastname, username, password },
         onSuccess: () => {
             $('#firstName').val('');
@@ -388,7 +390,7 @@ $('#loginSubmitButton').on('click', function () {
     const modal = mdb.Modal.getInstance(document.getElementById('loginModal'));
 
     handleAjax({
-        url: '/auth/login-user',
+        url: '/auth/login',
         data: { username, password },
         onSuccess: () => {
             $('#username').val('');
@@ -455,11 +457,11 @@ $('#saveChanges').on('click', function () {
     };
 
     handleAjax({
-        url: '/private/edit-user',
+        url: `/${username}/edit`,
         method: 'PUT',
         data: profileFormData,
         onSuccess: () => {
-            window.location = `/home/${userId}/profile`;
+            window.location = `/${username}`;
             setToaster('editProfile', 'Profile saved!');
         },
         onError: (error) => {
@@ -485,7 +487,7 @@ $('.like-btn').on('click', function () {
     const postId = button.data('post-id');
 
     handleAjax({
-        url: '/private/like',
+        url: '/likes/toggle',
         data: { postId },
         button,
         reloadOnSuccess: false,

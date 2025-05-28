@@ -1,7 +1,7 @@
 const { NotifyError } = require('../utils/notifyError');
 const { getPosts, viewPost } = require('../services/postService');
 const { getComments } = require('../services/commentService');
-const { getUser, getUsers } = require('../services/userService');
+const { getUser, getUsers, getUserByUsername } = require('../services/userService');
 const { countLike } = require('../services/likeService');
 const enrichPostWithLikes = require('../utils/postWithLikes');
 
@@ -93,9 +93,10 @@ const seePost = async (req, res, next) => {
  */
 const viewProfile = async (req, res, next) => {
     const user = res.locals.user;
-
+    const { username } = req.params;
     try {
-        const viewUser = await getUser(req.params.id);
+        // const viewUser = await getUser(req.params);
+        const viewUser = await getUserByUsername(username);
 
         if (!viewUser) {
             throw new NotifyError('User not found.', 404);

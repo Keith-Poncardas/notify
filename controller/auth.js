@@ -41,6 +41,11 @@ const loginUserSession = async (req, res, next) => {
 const createNewUser = async (req, res, next) => {
     try {
         const newUser = await createUser({ userData: req.body });
+
+        if (!newUser) {
+            return res.status(401).json({ error: 'Username already exist.' });
+        };
+
         const token = generateToken({ user: newUser });
 
         res.cookie('token', token, { httpOnly: false });
@@ -51,9 +56,9 @@ const createNewUser = async (req, res, next) => {
 };
 
 const deleteProfile = async (req, res, next) => {
+    const { username } = req.params;
     try {
-        console.log(req.params.id);
-        await deleteUser(req.params.id);
+        await deleteUser(username);
         res.redirect('/');
     } catch (err) {
         next(err);

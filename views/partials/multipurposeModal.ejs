@@ -14,7 +14,8 @@
 
         <div class="d-flex justify-content-start mb-3 gap-3">
           <% if (user) { %>
-          <%- include('./avatar', { dropdown: false }) %>
+          <%- include('./avatar', { dropdown: false, width: 35, height: 35 }) %>
+
           <div>
             <h6 class="mb-0"><%= user.firstname %> <%= user.lastname %></h6>
             <small class="text-muted"><i class="fas fa-globe me-1"></i>Public</small>
@@ -33,6 +34,7 @@
           <img id="imagePreview" class="img-fluid rounded-3 shadow d-none" style="width: 100%; height: 280px; object-fit: cover;" alt="Wild Landscape" />
         </div>
 
+        <% if (!isHideImgUp) { %>
         <div class="d-flex justify-content-between align-items-center mt-3">
           <span class="text-muted">Add to your post</span>
           <div>
@@ -44,6 +46,7 @@
             <i class="fas fa-ellipsis-h text-muted"></i> -->
           </div>
         </div>
+        <% } %>
 
       </div>
 

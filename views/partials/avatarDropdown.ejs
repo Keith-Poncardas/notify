@@ -1,7 +1,7 @@
 <% const dropdownLinks = [
 {
   label: 'My Profile',
-  location: `/home/${user._id}/profile`,
+  location: `/${user.username}`,
   icon: 'fa-user-circle'
 }
 ] %>
@@ -9,7 +9,7 @@
 <div class="dropdown">
 
   <!-- Avatar -->
-  <%- include('./avatar', { user, dropdown: true }) %>
+  <%- include('./avatar', { user, dropdown: true, width: 35, height: 35 }) %>
 
   <!-- Dropdown Menu -->
   <ul class="dropdown-menu dropdown-menu-end shadow-sm mt-2" aria-labelledby="navbarDropdownMenuAvatar">

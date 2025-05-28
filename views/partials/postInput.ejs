@@ -5,7 +5,7 @@
   <div class="d-flex align-items-center gap-2">
 
     <!-- Avatar Partial -->
-    <%- include('./avatar', { dropdown: false }) %>
+    <%- include('./avatar', { dropdown: false, width: 35, height: 35 }) %>
 
     <!-- Readonly dummy input triggers modal -->
     <input type="text" class="form-control rounded-pill ps-3 border-0" placeholder="<%= placeholder %>, <%= user.firstname %>" readonly style="cursor: pointer;" data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="<%= dataAction %>" data-title="<%= dataTitle %>" data-id="<%= dataId %>" data-user-id="<%= user._id %>" />

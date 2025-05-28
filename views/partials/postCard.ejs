@@ -7,9 +7,13 @@
 
         <!-- Profile Picture -->
 
-        <a href="/home/<%= post.author._id %>/profile">
+        <!-- <a href="/user/<%= post.author._id %>/profile">
           <img src="<%= post.author.profile_image %>" alt="Profile picture of Keith Poncardas" class="rounded-circle shadow-sm border border-primary border-2 me-3" height="42" width="42" loading="lazy" decoding="async" />
-        </a>
+        </a> -->
+
+        <div class="me-3">
+          <%- include('./avatar', { user: post.author, dropdown: false, width: 40, height: 40 }) %>
+        </div>
 
         <!-- Author Info -->
         <div>
@@ -45,7 +49,7 @@
       </div>
 
       <!-- Post Content -->
-      <p style="cursor: pointer;" onclick="window.location = `/home/<%= post._id %>/view`" class="card-text my-3">
+      <p style="cursor: pointer;" onclick="window.location = `/posts/<%= post._id %>/view`" class="card-text my-3">
         <% if (!isExpand) { %>
         <% if (post.description.length < 170) { %>
         <%= post.description %>

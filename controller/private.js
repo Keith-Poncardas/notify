@@ -186,6 +186,7 @@ const editProfilePage = async (req, res, next) => {
  */
 const editProfile = async (req, res, next) => {
     const userId = res.locals.user._id.toString();
+
     try {
         const { firstname, lastname, username, bio } = req.body;
         const profileData = { userId, firstname, lastname, username, bio };
@@ -223,7 +224,7 @@ const getSearchResults = async (req, res, next) => {
     const user = res.locals.user;
 
     try {
-        const query = req.query.q?.trim();
+        const query = req.query.search_query?.trim();
 
         const { users } = await getUsers({ search: query });
         const { posts } = await getPosts({ search: query });
@@ -246,7 +247,7 @@ const getSearchResults = async (req, res, next) => {
             searchResults,
             users: taggedUsers,
             posts: taggedPosts,
-            searchTxt: req.query.q
+            searchTxt: query
         });
     } catch (err) {
         next(err);
