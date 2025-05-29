@@ -3,9 +3,9 @@ const logger = require('../utils/logger');
 
 const client = createClient({
     username: 'default',
-    password: '00x79GYiStko2Kb3iuubjzMb8Gj3QHFA',
+    password: process.env.REDIS_PASS,
     socket: {
-        host: 'redis-10361.c292.ap-southeast-1-1.ec2.redns.redis-cloud.com',
+        host: process.env.REDIS_HOST,
         port: 10361
     }
 });
