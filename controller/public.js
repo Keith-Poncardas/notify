@@ -3,7 +3,10 @@ const { getPosts, viewPost } = require('../services/postService');
 const { getComments } = require('../services/commentService');
 const { getUser, getUsers, getUserByUsername } = require('../services/userService');
 const { countLike } = require('../services/likeService');
-const enrichPostWithLikes = require('../utils/postWithLikes');
+const enrichPost = require('../utils/enrichedPost');
+const redis = require('../config/redisClient');
+const { getCache, setCache } = require('../utils/cache');
+const logger = require('../utils/logger');
 
 /**
  * Renders the homepage with posts and their likes
@@ -17,16 +20,42 @@ const enrichPostWithLikes = require('../utils/postWithLikes');
 const homepage = async (req, res, next) => {
     const user = res.locals.user;
 
+    const page = parseInt(req.params.pageNumber) || 1;
+    const limit = 15;
+
+    const cacheKey = `posts:page=${page}:limit=${limit}`
+
     try {
-        const listOfPosts = await getPosts(req.query);
-        const { posts, currentPage, totalPages, totalDocuments } = listOfPosts;
+        const cachedPosts = await getCache(cacheKey);
+
+        if (cachedPosts) {
+            const postWithLikes = await Promise.all(
+                cachedPosts.posts.map((post) => enrichPost(post, user))
+            );
+
+            console.log("Post cached is active!");
+
+            return res.render('public/home', {
+                posts: postWithLikes,
+                currentPage: cachedPosts.currentPage,
+                totalPages: cachedPosts.totalPages,
+                totalDocuments: cachedPosts.totalDocuments
+            });
+
+        };
+
+        const listOfPosts = await getPosts(req.params);
 
         if (!listOfPosts) {
             throw new NotifyError('Failed to render posts', 500);
         };
 
+        const { posts, currentPage, totalPages, totalDocuments } = listOfPosts;
+
+        await setCache(cacheKey, { posts, currentPage, totalPages, totalDocuments });
+
         const postsWithLikes = await Promise.all(
-            posts.map((post) => enrichPostWithLikes(post, user))
+            posts.map((post) => enrichPost(post, user))
         );
 
         res.render('public/home', {
@@ -52,18 +81,29 @@ const homepage = async (req, res, next) => {
  */
 const seePost = async (req, res, next) => {
     const user = res.locals.user;
+    const { id } = req.params;
+
+    const cachedKey = `post:${id}`;
 
     try {
-        const post = await viewPost(req.params.id);
+
+        const cachedPost = await getCache(cachedKey);
+
+        if (cachedPost) {
+            logger.success('VIEW POST is cached');
+            const postWithLikes = await enrichPost(cachedPost, user);
+            return res.render('public/view', { post: postWithLikes });
+        };
+
+        const post = await viewPost(id);
 
         if (!post) {
             throw new NotifyError('Post not found or already deleted.', 404);
         };
 
-        const commentsList = await getComments(post._id, {});
-        const { comments } = commentsList;
+        await setCache(cachedKey, post);
 
-        const postWithLikes = await enrichPostWithLikes(post, user);
+        const postWithLikes = await enrichPost(post, user);
 
         res.locals.seo.add(res, {
             title: `${post.description.substring(0, 25)} - (@${post.author.username})`,
@@ -72,7 +112,9 @@ const seePost = async (req, res, next) => {
             twitterCard: post.post_image
         });
 
-        res.render('public/view', { post: postWithLikes, comments });
+        logger.warn('VIEW POST is NOT YET cached');
+
+        res.render('public/view', { post: postWithLikes });
     } catch (err) {
         next(err)
     }
@@ -94,20 +136,56 @@ const seePost = async (req, res, next) => {
 const viewProfile = async (req, res, next) => {
     const user = res.locals.user;
     const { username } = req.params;
+
+    const page = parseInt(req.params.pageNumber) || 1;
+    const limit = 15;
+
+    const cachedKeyUser = `userProfile:${username}`;
+    const cachedKeyPosts = `userProfile:${username}:page=${page}:limit=${limit}`;
+
     try {
-        // const viewUser = await getUser(req.params);
+
+        const cachedUser = await getCache(cachedKeyUser);
+        const cachedPost = await getCache(cachedKeyPosts);
+
+        if (cachedUser && cachedPost) {
+            logger.success('USER PROFILE is cached');
+            logger.success('USER POSTS PROFILE is cached');
+
+            const paginatedCachedPosts = await Promise.all(
+                cachedPost.posts.map(post => enrichPost(post, user))
+            );
+
+            return res.render('public/profile', {
+                viewUser: cachedUser,
+                posts: paginatedCachedPosts,
+                currentPage: cachedPost.currentPage,
+                totalPages: cachedPost.totalPages,
+                totalDocuments: cachedPost.totalDocuments
+            });
+
+        };
+
         const viewUser = await getUserByUsername(username);
 
         if (!viewUser) {
             throw new NotifyError('User not found.', 404);
         };
 
-        const userPosts = await getPosts(req.query, viewUser._id);
+        const userPosts = await getPosts(req.params, viewUser._id);
 
         const { posts, currentPage, totalPages, totalDocuments } = userPosts;
 
+        await setCache(cachedKeyUser, viewUser);
+        await setCache(cachedKeyPosts, {
+            posts,
+            currentPage,
+            totalPages,
+            totalDocuments
+        }, 60);
+
         const postWithLikes = await Promise.all(
-            posts.map((post) => enrichPostWithLikes(post, user))
+            posts.map((post) => enrichPost(post, user))
         );
 
         res.locals.seo.add(res, {
@@ -139,10 +217,38 @@ const viewProfile = async (req, res, next) => {
  * @throws {NotifyError} Throws NotifyError if there's an error retrieving users
  */
 const viewUsers = async (req, res) => {
+    const { pageNumber } = req.params;
+
+    const page = parseInt(pageNumber) || 1;
+    const limit = 15;
+
+    const cacheKeyUsers = `users:page=${page}:limit=${limit}`;
+
     try {
-        const usersList = await getUsers(req.query);
-        const { users } = usersList;
-        res.render('public/users', { users });
+        const cachedUsers = await getCache(cacheKeyUsers);
+
+        if (cachedUsers) {
+            logger.success('USERS is cached');
+            return res.render('public/users', {
+                users: cachedUsers.users,
+                currentPage: cachedUsers.currentPage,
+                totalPages: cachedUsers.totalPages,
+                totalDocuments: cachedUsers.totalDocuments,
+            });
+        };
+
+        console.log(req.params.pageNumber);
+        const usersList = await getUsers(req.params);
+
+        if (!usersList) {
+            throw new NotifyError('Failed to fetch users', 500);
+        };
+
+        const { users, currentPage, totalDocuments, totalPages } = usersList;
+
+        await setCache(cacheKeyUsers, { users, currentPage, totalDocuments, totalPages });
+
+        res.render('public/users', { users, currentPage, totalDocuments, totalPages });
     } catch (err) {
         throw new NotifyError(err.message);
     }

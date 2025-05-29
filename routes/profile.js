@@ -8,7 +8,7 @@ const { editProfileSchema } = require('../utils/schemas');
 const { deleteProfile } = require('../controller/auth');
 const router = express.Router();
 
-router.get('/:username', viewProfile);
+router.get(['/:username/page/:pageNumber', '/:username'], viewProfile);
 router.get('/:username/edit', requireAuth, editProfilePage);
 router.delete('/:username/delete', requireAuth, deleteProfile);
 router.put('/:username/edit', requireAuth, upload.single('profileImage'), validateSchema(editProfileSchema), editProfile);

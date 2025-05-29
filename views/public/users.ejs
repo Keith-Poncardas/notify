@@ -2,3 +2,5 @@
 
 <%- include('../partials/sectionLabel', { icon: 'fa-solid fa-users', title: 'Users' }) %>
 <%- include('../partials/usersLoop', { users }) %>
+
+<%- include('../partials/pagination', { currentPage, totalPages, extendedPath: '/users' }) %>

@@ -14,6 +14,6 @@
 <%- include('../partials/pagination', { 
     currentPage, 
     totalPages, 
-    path: `home/${viewUser?._id}/profile` 
+    extendedPath: `/${viewUser.username}` 
 }) %>
 <% } %>

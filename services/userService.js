@@ -183,9 +183,9 @@ const getUsers = async (query) => {
         */
         if (!query) throw new NotifyError('Missing Query');
 
-        const { page = 1, search } = query;
+        const { pageNumber = 1, search } = query;
         const limit = 15;
-        const currentPage = parseInt(page);
+        const currentPage = parseInt(pageNumber);
 
         const totalDocuments = await User.countDocuments();
         const totalPages = Math.ceil(totalDocuments / limit);

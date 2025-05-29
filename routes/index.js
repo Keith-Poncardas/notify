@@ -10,6 +10,6 @@ router.use('/likes', requireAuth, require('./like'));
 router.use('/comments', requireAuth, require('./comment'));
 router.use('/', require('./results'));
 router.use('/', require('./profile'));
-router.use('/', homepage);
+router.use(['/page/:pageNumber', '/'], homepage);
 
 module.exports = router;

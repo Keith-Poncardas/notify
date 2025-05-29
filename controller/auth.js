@@ -1,4 +1,5 @@
 const { createUser, loginUser, deleteUser } = require("../services/userService");
+const deleteKeysByPattern = require("../utils/deleteKeysByPattern");
 const generateToken = require("../utils/generateToken");
 const { NotifyError } = require("../utils/notifyError");
 
@@ -40,6 +41,8 @@ const loginUserSession = async (req, res, next) => {
  */
 const createNewUser = async (req, res, next) => {
     try {
+        await deleteKeysByPattern('users:page=*:limit=*');
+
         const newUser = await createUser({ userData: req.body });
 
         if (!newUser) {

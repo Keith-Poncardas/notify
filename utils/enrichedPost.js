@@ -1,7 +1,7 @@
 const { getAllCommentsById } = require("../services/commentService");
 const { getAllLikesById } = require("../services/likeService")
 
-const enrichPostWithLikes = async (post, user) => {
+const enrichPost = async (post, user) => {
     const likes = await getAllLikesById(post._id);
     const comments = await getAllCommentsById(post._id);
     const likeCount = likes.length;
@@ -14,8 +14,9 @@ const enrichPostWithLikes = async (post, user) => {
         ...post._doc || post, // Support Mongoose documents or plain objects
         likeCount,
         isLikedByUser,
-        commentCount
+        commentCount,
+        comments
     };
 };
 
-module.exports = enrichPostWithLikes;
+module.exports = enrichPost;

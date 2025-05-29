@@ -8,5 +8,5 @@
 <%- include('../partials/postsLoop', { posts }); %>
 
 <% if (posts.length !==  0) { %>
-<%- include('../partials/pagination', { currentPage, totalPages, path: 'home' }) %>
+<%- include('../partials/pagination', { currentPage, totalPages, extendedPath: null }) %>
 <% } %>

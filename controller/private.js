@@ -4,7 +4,8 @@ const { editUser, getUsers } = require("../services/userService");
 const { findLike, deleteLike, createLike, countLike } = require("../services/likeService");
 
 const uploadToCloudinary = require("../utils/claudinaryUpload");
-const enrichPostWithLikes = require("../utils/postWithLikes");
+const enrichPost = require("../utils/enrichedPost");
+const deleteKeysByPattern = require('../utils/deleteKeysByPattern');
 
 /**
  * Creates a new post for a user with optional image upload
@@ -24,6 +25,8 @@ const createNewPost = async (req, res, next) => {
     const userId = res.locals.user._id.toString();
 
     try {
+        await deleteKeysByPattern('posts:page=*:limit=*');
+
         const { description } = req.body;
         const postData = { description };
 
@@ -34,6 +37,7 @@ const createNewPost = async (req, res, next) => {
         };
 
         const post = await createPost(userId, postData);
+
         res.json(post);
     } catch (err) {
         next(err);
@@ -57,8 +61,9 @@ const createNewPost = async (req, res, next) => {
  */
 const alterPost = async (req, res, next) => {
     try {
-        const { description } = req.body;
+        await deleteKeysByPattern('posts:page=*:limit=*');
 
+        const { description } = req.body;
         const postEditData = { description };
 
         if (req.file) {
@@ -89,6 +94,7 @@ const alterPost = async (req, res, next) => {
  */
 const killPost = async (req, res, next) => {
     try {
+        await deleteKeysByPattern('posts:page=*:limit=*');
         const post = await deletePost(req.params.id);
         res.json(post);
     } catch (err) {
@@ -233,7 +239,7 @@ const getSearchResults = async (req, res, next) => {
 
         const taggedPosts = await Promise.all(
             posts.map(async (post) => {
-                const postWithLikes = await enrichPostWithLikes(post, user);
+                const postWithLikes = await enrichPost(post, user);
                 return {
                     type: 'post',
                     ...postWithLikes

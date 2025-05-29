@@ -9,7 +9,7 @@ const { NotifyError } = require("../utils/notifyError");
  */
 const getAllCommentsById = async (postId) => {
     try {
-        const comments = await Comments.find({ post: postId }).lean();
+        const comments = await Comments.find({ post: postId }).lean().populate('author');
         return comments;
     } catch (err) {
         throw new NotifyError(err.message);

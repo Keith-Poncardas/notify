@@ -103,7 +103,8 @@ const editPost = async (postId, postData) => {
  *   - totalPages: Total number of pages based on limit
  * @throws {NotifyError} If there's an error retrieving the posts
  */
-const getPosts = async (query, userId = null) => {
+const getPosts = async (query, userId = null, limit = 15) => {
+
     try {
 
         /**
@@ -111,9 +112,8 @@ const getPosts = async (query, userId = null) => {
          */
         if (!query) throw new NotifyError('Missing Query');
 
-        const { page = 1, search } = query;
-        const limit = 15;
-        const currentPage = parseInt(page);
+        const { pageNumber = 1, search } = query;
+        const currentPage = parseInt(pageNumber);
 
         let filterBy = {};
 

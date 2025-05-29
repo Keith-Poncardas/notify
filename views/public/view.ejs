@@ -5,4 +5,4 @@
 <%- include('../partials/postInput', { placeholder:"Comment as", dataAction: 'create-comment', dataTitle: 'Comment', dataId: post._id }) %>
 <%- include('../partials/sectionLabel', { icon: 'fa-regular fa-comments', title: 'Comments' }) %>
 
-<%- include('../partials/commentsLoop', { comments }) %>
+<%- include('../partials/commentsLoop', { comments: post.comments }) %>
