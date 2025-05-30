@@ -10,13 +10,12 @@
       <!-- User Name & Comment -->
       <div class="flex-grow-1">
         <h6 class="card-title fs-6 mb-1" id="post-author"><%= comment.author.firstname %> <%= comment.author.lastname %></h6>
-        <p class="mb-0 text-muted" id="comment-text">
+        <p class="mb-0 text-muted text-wrap" id="comment-text">
           <%= comment.content %>
         </p>
       </div>
 
       <!-- Ellipsis Button -->
-
       <% if (user && comment?.author && comment.author._id?.toString() === user._id?.toString()) { %>
       <div class="ms-auto">
         <div class="dropdown d-inline-block">

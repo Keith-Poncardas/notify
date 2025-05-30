@@ -164,7 +164,7 @@ const deletePost = async (postId) => {
         /**
          * Delete post by ID
          */
-        const post = await Posts.findOneAndDelete({ _id: postId });
+        const post = await Posts.findOneAndDelete({ _id: postId }).populate('author');
 
         /**
          * Check if post is not found

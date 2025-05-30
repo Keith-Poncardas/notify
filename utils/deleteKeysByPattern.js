@@ -23,5 +23,4 @@ async function deleteKeysByPattern(pattern) {
     }
 }
 
-
 module.exports = deleteKeysByPattern;

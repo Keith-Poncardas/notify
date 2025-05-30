@@ -205,8 +205,11 @@ $('#modalSubmitButton').on('click', function () {
                 data: formData,
                 contentType: false,
                 processData: false,
-                onSuccess: () => {
-                    setToaster('createPost', 'Post created succesfully!');
+                onSuccess: (response) => {
+                    setToaster('createPost', response.message);
+                },
+                onError: (error) => {
+                    notyf.error(error.message);
                 },
                 button,
                 modal,
@@ -240,6 +243,12 @@ $('#modalSubmitButton').on('click', function () {
                 data: { content, userId },
                 button,
                 modal,
+                onSuccess: (response) => {
+                    setToaster('createComment', response.message);
+                },
+                onError: (error) => {
+                    notyf.error(error.message);
+                }
             });
 
         },
@@ -266,6 +275,7 @@ $('#modalSubmitButton').on('click', function () {
 
 initializedToaster('createPost', 'success');
 initializedToaster('editPost', 'success');
+initializedToaster('createComment', 'success');
 
 /**
  * Delete handler
@@ -284,11 +294,11 @@ $('.deleteButton').on('click', function (event) {
                 method: 'DELETE',
                 data: { id },
                 button,
-                onSuccess: () => {
-                    setToaster('deletePost', 'Post deleted!');
+                onSuccess: (response) => {
+                    setToaster('deletePost', response.message);
                 },
-                onError: () => {
-                    notyf.error('Failed to delete post.');
+                onError: (error) => {
+                    notyf.error(error.message);
                 }
             });
         },
@@ -298,8 +308,11 @@ $('.deleteButton').on('click', function (event) {
                 method: 'DELETE',
                 data: { id },
                 button,
-                onSuccess: () => {
-                    setToaster('deleteComment', 'Comment deleted!');
+                onSuccess: (response) => {
+                    setToaster('deleteComment', response.message);
+                },
+                onError: (error) => {
+                    notyf.error(error.message);
                 }
             });
         },
@@ -358,16 +371,16 @@ $('#signupModalSubmitBtn').on('click', function () {
     handleAjax({
         url: '/auth/new',
         data: { firstname, lastname, username, password },
-        onSuccess: () => {
+        onSuccess: (response) => {
             $('#firstName').val('');
             $('#lastName').val('');
             $('#username').val('');
             $('#password').val('');
 
-            setToaster('signup', `Welcome @${username}!`);
+            setToaster('signup', response.message);
         },
-        onError: (err) => {
-            notyf.error(err.responseJSON.error);
+        onError: (error) => {
+            notyf.error(error.responseJSON.message);
         },
         reloadOnSuccess: true,
         modal,
@@ -399,8 +412,7 @@ $('#loginSubmitButton').on('click', function () {
             setToaster('loginSuccess', `Welcome back @${username}`);
         },
         onError: (error) => {
-            const errorMessage = error.responseJSON?.error || 'An unexpected error occurred.';
-            notyf.error(errorMessage);
+            notyf.error(error.responseJSON.message || 'Unexpected error occured.');
         },
         modal,
         button
@@ -421,8 +433,8 @@ $('#logoutBtn').on('click', function () {
         url: '/auth/logout',
         type: 'POST',
         xhrFields: { withCredentials: true },
-        onSuccess: () => {
-            setToaster('logout', "Logout Successfully!");
+        onSuccess: (response) => {
+            setToaster('logout', response.message);
         },
         button
     });
@@ -493,6 +505,7 @@ $('.like-btn').on('click', function () {
         reloadOnSuccess: false,
         onSuccess: (response) => {
 
+
             button.setLoading(false);
 
             const iconClass = response.liked ? 'fa-thumbs-down' : 'fa-thumbs-up';
@@ -511,7 +524,13 @@ $('.like-btn').on('click', function () {
             restoredButton
                 .html(`<i class="fas ${iconClass} me-1"></i> ${label} <span class="badge badge-primary ms-1 like-count">${count}</span>`)
                 .toggleClass('liked');
+
+        },
+        onError: (error) => {
+            notyf.error(error.responseJSON.message);
         }
     });
 
 });
+
+initializedToaster('toggleLike', 'success');
