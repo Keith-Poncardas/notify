@@ -1,6 +1,6 @@
 const { createPost, editPost, deletePost, getPosts } = require('../services/postService');
 const { createComment, deleteComment, editComment } = require("../services/commentService");
-const { editUser, getUsers } = require("../services/userService");
+const { editUser, getUsers, getUser } = require("../services/userService");
 const { findLike, deleteLike, createLike, countLike } = require("../services/likeService");
 
 const uploadToCloudinary = require("../utils/claudinaryUpload");
@@ -25,7 +25,12 @@ const createNewPost = async (req, res, next) => {
     const userId = res.locals.user._id.toString();
 
     try {
+        const { username } = await getUser(userId);
+
+        console.log(username);
+
         await deleteKeysByPattern('posts:page=*:limit=*');
+        await deleteKeysByPattern(`userPosts:${username}:page=*:limit=*`);
 
         const { description } = req.body;
         const postData = { description };
@@ -190,12 +195,15 @@ const editProfilePage = async (req, res, next) => {
  * @returns {Promise<Object>} JSON response containing the updated user profile
  * @throws {Error} Forwards any errors to Express error handler
  */
+const redis = require('../config/redisClient');
 const editProfile = async (req, res, next) => {
     const userId = res.locals.user._id.toString();
 
     try {
         const { firstname, lastname, username, bio } = req.body;
         const profileData = { userId, firstname, lastname, username, bio };
+
+        await redis.del(`userProfile:${username}`);
 
         if (req.file) {
             const result = await uploadToCloudinary(req.file.buffer, 'Profile Image');

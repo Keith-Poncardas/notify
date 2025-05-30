@@ -33,7 +33,7 @@ const homepage = async (req, res, next) => {
                 cachedPosts.posts.map((post) => enrichPost(post, user))
             );
 
-            console.log("Post cached is active!");
+            logger.success("POSTS is cached");
 
             return res.render('public/home', {
                 posts: postWithLikes,
@@ -141,7 +141,7 @@ const viewProfile = async (req, res, next) => {
     const limit = 15;
 
     const cachedKeyUser = `userProfile:${username}`;
-    const cachedKeyPosts = `userProfile:${username}:page=${page}:limit=${limit}`;
+    const cachedKeyPosts = `userPosts:${username}:page=${page}:limit=${limit}`;
 
     try {
 
