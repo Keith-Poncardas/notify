@@ -37,8 +37,6 @@ const enrichPost = async (post, user) => {
         const cachedLikesCount = cachedLikes.length;
         const cachedCommentsCount = cachedComments.length;
 
-        console.log(millify(1000000000));
-
         return {
             ...post._doc || post, // Support Mongoose documents or plain objects
             likeCount: millify(cachedLikesCount),

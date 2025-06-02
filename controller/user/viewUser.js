@@ -39,6 +39,14 @@ module.exports = async (req, res, next) => {
                 cachedPost.posts.map(post => enrichPost(post, user))
             );
 
+            res.locals.seo.add(res, {
+                title: `${cachedUser.firstname} ${cachedUser.lastname} (@${cachedUser.username})`,
+                description: cachedUser.bio || `Hi peeps I'm ${cachedUser.firstname}!`,
+                image: cachedUser.profile_image,
+                url: `https://notify-b60e.onrender.com/${cachedUser.username}`,
+                twitterCard: cachedUser.profile_image
+            });
+
             return res.render('users/profile', {
                 viewUser: cachedUser,
                 posts: paginatedCachedPosts,

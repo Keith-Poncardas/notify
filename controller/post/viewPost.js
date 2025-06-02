@@ -23,6 +23,14 @@ module.exports = async (req, res, next) => {
 
         if (cachedPost) {
             const postWithLikes = await enrichPost(cachedPost, user);
+
+            res.locals.seo.add(res, {
+                title: `${cachedPost.description.substring(0, 25)} - (@${cachedPost.author.username})`,
+                description: cachedPost.description,
+                image: cachedPost.post_image,
+                twitterCard: cachedPost.post_image
+            });
+
             return res.render('post/view', { post: postWithLikes });
         };
 
