@@ -1,31 +1,33 @@
 <div class="card bg-body-tertiary p-3 mb-3 shadow-sm">
-  <div class="d-flex align-items-center">
+  <div class="d-flex flex-wrap align-items-center justify-content-between">
 
-    <div class="me-3 flex-shrink-0">
-      <%- include('./avatar', { 
-        user, 
-        dropdown: false, 
-        width: 48, 
-        height: 48,
-        className: "shadow-sm border border-primary border-2 p-1" 
-      }) %>
+    <!-- Avatar and Name -->
+    <div class="d-flex align-items-center flex-grow-1 me-2 mb-2 mb-sm-0">
+      <div class="me-3 flex-shrink-0">
+        <%- include('./avatar', { 
+          user, 
+          dropdown: false, 
+          width: 48, 
+          height: 48,
+          className: "shadow-sm border border-primary border-2 p-1" 
+        }) %>
+      </div>
+
+      <div class="flex-grow-1 min-w-0">
+        <h5 class="card-title fs-6 mb-0 fw-semibold text-truncate" id="post-author">
+          <%= user.firstname %> <%= user.lastname %>
+        </h5>
+        <p class="card-subtitle text-muted small mb-0 text-truncate">
+          @<%= user.username %>
+        </p>
+      </div>
     </div>
 
-    <div class="flex-grow-1">
-      <h5 class="card-title fs-6 mb-0 fw-semibold text-truncate" id="post-author">
-        <%= user.firstname %> <%= user.lastname %>
-      </h5>
-      <p class="card-subtitle text-muted small mb-0 text-truncate">
-        @<%= user.username %>
-      </p>
-    </div>
-
-    <!-- Optional: Add more interactive elements if needed -->
-    <!-- <div class="flex-shrink-0 ms-2">
-      <button class="btn btn-sm btn-outline-primary rounded-circle">
-        <i class="fas fa-ellipsis-h"></i>
+    <!-- Follow Button -->
+    <div class="ms-auto">
+      <button class="btn btn-sm btn-outline-primary">
+        Follow
       </button>
-    </div> -->
-
+    </div>
   </div>
 </div>
