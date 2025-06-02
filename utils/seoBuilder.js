@@ -7,9 +7,9 @@ class SeoBuilder {
             description: 'Notify is a social media platform where you can connect with friends, share updates, photos, and stay informed. Join Notify today and be part of a growing community.',
             keywords: 'social media, connect, share, friends, updates, Notify, photos, community',
             url: 'https://notify-b60e.onrender.com/',
-            image: './seo-logo.png', // Replace with your actual image URL
+            image: 'https://res.cloudinary.com/dbpfdlf7z/image/upload/v1748861512/seo-logo_i8wl4z.png', // Replace with your actual image URL
             type: 'website',
-            twitterCard: './seo-logo.png', // Same image or a Twitter-specific card
+            twitterCard: 'https://res.cloudinary.com/dbpfdlf7z/image/upload/v1748861512/seo-logo_i8wl4z.png', // Same image or a Twitter-specific card
             twitterCreator: '@yourtwitterhandle', // Replace with your actual Twitter handle
             schema: {
                 "@context": "https://schema.org",
@@ -17,7 +17,7 @@ class SeoBuilder {
                 "name": "Notify",
                 "url": "https://notifyapp.vercel.app/",
                 "description": "Notify is a social media platform where you can connect with friends, share updates, photos, and stay informed.",
-                "image": "./seo-logo.png", // Same image URL
+                "image": "https://res.cloudinary.com/dbpfdlf7z/image/upload/v1748861512/seo-logo_i8wl4z.png", // Same image URL
                 "potentialAction": {
                     "@type": "SearchAction",
                     "target": "",
