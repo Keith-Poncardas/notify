@@ -1,4 +1,5 @@
 const { createComment } = require("../../services/commentService");
+const redis = require('../../config/redisClient');
 
 /**
  * Creates a new comment for a specified post
@@ -18,6 +19,7 @@ module.exports = async (req, res, next) => {
     const userId = res.locals.user._id.toString();
     try {
         const comment = await createComment(userId, req.params.id, req.body);
+        await redis.del(`comments:${req.params.id}`);
 
         if (!comment) {
             return res.status(400).json({

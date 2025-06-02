@@ -508,22 +508,48 @@ $('.like-btn').on('click', function () {
 
             button.setLoading(false);
 
-            const iconClass = response.liked ? 'fa-thumbs-down' : 'fa-thumbs-up';
-            const label = response.liked ? 'Liked' : 'Like';
+            const liked = response.liked;
             const count = response.totalLikes;
 
-            const restoredButton = $(`.like-btn[data-post-id="${postId}"]`);
-            const isLiked = restoredButton.hasClass('liked');
+            const $button = $(button);
+            const $post = $button.closest('.post-container');
 
-            if (isLiked) {
-                restoredButton.removeClass('active');
+            // 1. Toggle button class
+            $button.toggleClass('liked active', liked);
+
+            // 2. Update icon (heart or thumbs-up)
+            const $icon = $button.find('.like-icon');
+            if (liked) {
+                $icon.replaceWith(`
+    <span class="like-icon badge bg-danger rounded-circle p-1 me-1" style="width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;">
+      <i class="fas fa-heart" style="font-size: 10px;"></i>
+    </span>
+  `);
             } else {
-                restoredButton.addClass('active');
+                $icon.replaceWith(`<i class="like-icon far fa-thumbs-up me-2"></i>`);
             }
 
-            restoredButton
-                .html(`<i class="fas ${iconClass} me-1"></i> ${label} <span class="badge badge-primary ms-1 like-count">${count}</span>`)
-                .toggleClass('liked');
+            // 3. Update label
+            $button.find('.like-label')
+                .text(liked ? 'Liked' : 'Like')
+                .toggleClass('text-danger', liked);
+
+            // 4. Update like count and heart icon display
+            const $likeCount = $post.find('.like-count');
+            const $likeDisplay = $post.find('.like-display');
+
+            $likeCount.text(count);
+
+            if (count === 0) {
+                $likeDisplay.hide();
+            } else {
+                $likeDisplay.show();
+            }
+
+
+
+            // <small class="text-muted like-count"><%= post.likeCount %></small>
+            // <i class="fas ${iconClass} me-1"></i> ${label} <span class="badge badge-primary ms-1 like-count">${count}</span>
 
         },
         onError: (error) => {

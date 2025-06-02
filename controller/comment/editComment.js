@@ -1,4 +1,5 @@
 const { editComment } = require("../../services/commentService");
+const redis = require('../../config/redisClient');
 
 /**
  * Updates a comment based on the provided ID and request body
@@ -14,6 +15,7 @@ const { editComment } = require("../../services/commentService");
 module.exports = async (req, res, next) => {
     try {
         const comment = await editComment(req.params.id, req.body);
+        await redis.del(`comments:${comment.post._id}`);
 
         if (!comment) {
             return res.status(400).json({

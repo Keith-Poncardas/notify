@@ -1,4 +1,5 @@
 const { deleteComment } = require("../../services/commentService");
+const redis = require('../../config/redisClient');
 
 /**
  * Handles the deletion of a comment by ID.
@@ -11,6 +12,7 @@ const { deleteComment } = require("../../services/commentService");
 module.exports = async (req, res, next) => {
     try {
         const comment = await deleteComment(req.params.id);
+        await redis.del(`comments:${comment.post._id}`);
 
         if (!comment) {
             return res.status(400).json({

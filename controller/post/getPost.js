@@ -25,11 +25,9 @@ module.exports = async (req, res, next) => {
 
         if (cachedPosts) {
 
-            const postWithLikes = await Promise.all(
-                cachedPosts.posts.map((post) => enrichPost(post, user))
-            );
+            const postWithLikes = await Promise.all(cachedPosts.posts.map((post) => enrichPost(post, user)));
 
-            return res.render('public/home', {
+            return res.render('home/index', {
                 posts: postWithLikes,
                 currentPage: cachedPosts.currentPage,
                 totalPages: cachedPosts.totalPages,
@@ -52,7 +50,7 @@ module.exports = async (req, res, next) => {
             posts.map((post) => enrichPost(post, user))
         );
 
-        res.render('public/home', {
+        res.render('home/index', {
             posts: postsWithLikes,
             currentPage,
             totalPages,

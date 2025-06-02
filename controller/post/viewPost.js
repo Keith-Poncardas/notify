@@ -23,7 +23,7 @@ module.exports = async (req, res, next) => {
 
         if (cachedPost) {
             const postWithLikes = await enrichPost(cachedPost, user);
-            return res.render('public/view', { post: postWithLikes });
+            return res.render('post/view', { post: postWithLikes });
         };
 
         const post = await viewPost(id);
@@ -43,7 +43,7 @@ module.exports = async (req, res, next) => {
             twitterCard: post.post_image
         });
 
-        res.render('public/view', { post: postWithLikes });
+        res.render('post/view', { post: postWithLikes });
     } catch (err) {
         next(err)
     }

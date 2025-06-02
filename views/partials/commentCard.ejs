@@ -1,35 +1,63 @@
-<div class="d-flex align-items-start">
-  <!-- User Avatar Outside the Card -->
-  <a href="/<%= comment.author.username %>" class="me-3">
-    <img src="<%= comment.author.profile_image %>" class="rounded-circle shadow-sm border border-primary border-2" height="40" width="40" alt="Keith Poncardas' Profile Picture" loading="lazy" />
+<div class="d-flex align-items-start mb-3">
+  <!-- User Avatar -->
+  <a href="/<%= comment.author.username %>" class="me-2 flex-shrink-0">
+    <img src="<%= comment.author.profile_image %>" class="rounded-circle" height="32" width="32" alt="<%= comment.author.firstname %> <%= comment.author.lastname %>'s Profile Picture" loading="lazy" />
   </a>
 
-  <!-- Comment Card -->
-  <div class="card p-3 bg-body-tertiary mb-3 w-100">
-    <div class="d-flex align-items-start">
-      <!-- User Name & Comment -->
-      <div class="flex-grow-1">
-        <h6 class="card-title fs-6 mb-1" id="post-author"><%= comment.author.firstname %> <%= comment.author.lastname %></h6>
-        <p class="mb-0 text-muted text-wrap" id="comment-text">
-          <%= comment.content %>
-        </p>
-      </div>
-
-      <!-- Ellipsis Button -->
-      <% if (user && comment?.author && comment.author._id?.toString() === user._id?.toString()) { %>
-      <div class="ms-auto">
-        <div class="dropdown d-inline-block">
-          <button class="btn btn-link text-muted btn-sm" data-mdb-dropdown-init aria-expanded="false">
-            <i class="fas fa-ellipsis-v"></i>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-end shadow-sm">
-            <li><button class="dropdown-item" data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="edit-comment" data-title="Edit Comment" data-id="<%= comment._id %>" data-content="<%= comment.content %>"><i class="fas fa-edit me-2"></i>Edit</button></li>
-            <li><button class="dropdown-item text-danger deleteButton" data-action="delete-comment" data-id="<%= comment._id %>"><i class="fas fa-trash me-2"></i>Delete</button></li>
-          </ul>
+  <!-- Comment Content -->
+  <div class="flex-grow-1">
+    <!-- Comment Bubble -->
+    <div class="bg-body-tertiary rounded-4 px-3 py-2 position-relative">
+      <div class="d-flex align-items-start">
+        <!-- User Name & Comment Text -->
+        <div class="flex-grow-1">
+          <h6 class="mb-1 fw-bold" style="font-size: 13px;"><%= comment.author.firstname %> <%= comment.author.lastname %></h6>
+          <p class="mb-0 text-break text-wrap lh-sm" style="font-size: 14px;" id="comment-text">
+            <%= comment.content %>
+          </p>
         </div>
-      </div>
-      <% } %>
 
+        <!-- Ellipsis Button (only for comment owner) -->
+        <% if (user && comment?.author && comment.author._id?.toString() === user._id?.toString()) { %>
+        <div class="ms-2 flex-shrink-0">
+          <div class="dropdown">
+            <button class="btn btn-link text-muted p-1" style="font-size: 12px;" data-mdb-dropdown-init aria-expanded="false">
+              <i class="fas fa-ellipsis-h"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+              <li><button class="dropdown-item" data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="edit-comment" data-title="Edit Comment" data-id="<%= comment._id %>" data-content="<%= comment.content %>">
+                  <i class="fas fa-edit me-2"></i>Edit
+                </button></li>
+              <li><button class="dropdown-item text-danger deleteButton" data-action="delete-comment" data-id="<%= comment._id %>">
+                  <i class="fas fa-trash me-2"></i>Delete
+                </button></li>
+            </ul>
+          </div>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Action Buttons (Facebook style) -->
+    <div class="d-flex align-items-center mt-1 ms-3">
+      <small class="text-muted me-3"><%= timeAgo(comment.createdAt) %></small>
+      <button class="btn btn-link text-muted p-0 me-3 disabled" style="font-size: 12px; font-weight: 600;" data-mdb-ripple-init>
+        Like
+      </button>
+      <button class="btn btn-link text-muted p-0 me-3 disabled" style="font-size: 12px; font-weight: 600;" data-mdb-ripple-init>
+        Reply
+      </button>
+
+      <!-- Reaction count (if there are likes) -->
+      <!-- Uncomment and modify if you have comment likes functionality -->
+      <!-- <% if (comment.likeCount && comment.likeCount > 0) { %>
+      <div class="d-flex align-items-center ms-auto">
+        <span class="badge bg-primary rounded-circle p-1 me-1" style="width: 16px; height: 16px; display: flex; align-items: center; justify-content: center;">
+          <i class="fas fa-thumbs-up" style="font-size: 8px;"></i>
+        </span>
+        <small class="text-muted"><%= comment.likeCount %></small>
+      </div>
+      <% } %> -->
     </div>
   </div>
 </div>

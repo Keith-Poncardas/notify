@@ -21,6 +21,7 @@ const authenticateUser = require('./middleware/authenticate');
 const cookieParser = require('cookie-parser');
 const seoBuilder = require('./utils/seoBuilder');
 
+
 const PORT = process.env.PORT || 3000;
 
 const app = express();
@@ -41,6 +42,7 @@ app.use(seoBuilder.middleware());
 
 app.use(timeFormatterGlobal);
 
+
 app.engine('ejs', ejsMate);
 
 // app.use('/home', publicRoutes);
@@ -58,6 +60,7 @@ app.engine('ejs', ejsMate);
 // app.use('/comments', requireAuth, commentRoutes);
 // app.use('/likes', requireAuth, likeRoutes);
 const mainRouter = require('./routes');
+
 app.use('/', mainRouter);
 
 app.use(pageNotFound);

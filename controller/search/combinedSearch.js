@@ -40,7 +40,7 @@ module.exports = async (req, res, next) => {
 
         const searchResults = [...taggedUsers, ...taggedPosts];
 
-        res.render('private/search-results', {
+        res.render('search/results', {
             searchResults,
             users: taggedUsers,
             posts: taggedPosts,

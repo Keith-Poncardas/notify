@@ -3,6 +3,7 @@ const { getUserByUsername } = require("../../services/userService");
 const { getCache, setCache } = require("../../utils/cache");
 const enrichPost = require("../../utils/enrichedPost");
 const logger = require("../../utils/logger");
+const { NotifyError } = require("../../utils/notifyError");
 
 /**
  * Renders the public profile view for a specific user
@@ -33,14 +34,12 @@ module.exports = async (req, res, next) => {
         const cachedPost = await getCache(cachedKeyPosts);
 
         if (cachedUser && cachedPost) {
-            logger.success('USER PROFILE is cached');
-            logger.success('USER POSTS PROFILE is cached');
 
             const paginatedCachedPosts = await Promise.all(
                 cachedPost.posts.map(post => enrichPost(post, user))
             );
 
-            return res.render('public/profile', {
+            return res.render('users/profile', {
                 viewUser: cachedUser,
                 posts: paginatedCachedPosts,
                 currentPage: cachedPost.currentPage,
@@ -80,7 +79,7 @@ module.exports = async (req, res, next) => {
             twitterCard: viewUser.profile_image[0] || null
         });
 
-        res.render('public/profile', {
+        res.render('users/profile', {
             viewUser,
             posts: postWithLikes,
             currentPage,

@@ -1,79 +1,84 @@
-<div class="card bg-body-tertiary rounded-3 mb-3">
-  <div class="card-body">
+<div class="card bg-body-tertiary rounded-3 mb-3 shadow-sm post-container">
+  <div class="card-body p-3">
     <div class="align-items-center">
 
       <!-- Post Header -->
-      <div class="d-flex align-items-start">
+      <div class="d-flex align-items-center mb-3">
 
         <!-- Profile Picture -->
-
-        <!-- <a href="/user/<%= post.author._id %>/profile">
-          <img src="<%= post.author.profile_image %>" alt="Profile picture of Keith Poncardas" class="rounded-circle shadow-sm border border-primary border-2 me-3" height="42" width="42" loading="lazy" decoding="async" />
-        </a> -->
-
         <div class="me-3">
           <%- include('./avatar', { user: post.author, dropdown: false, width: 40, height: 40 }) %>
         </div>
 
         <!-- Author Info -->
-        <div>
-          <h5 class="card-title fs-6 m-0" id="post-author">
-            <%= post.author.firstname %> <%= post.author.lastname %>
-            <% if (user && post.author && post.author._id?.toString() === user._id?.toString()) { %>
-            <span class="badge badge-info">You</span>
-            <% } %>
+        <div class="flex-grow-1">
+          <div class="d-flex align-items-center">
+            <h6 class="mb-0 fw-bold" id="post-author">
+              <%= post.author.firstname %> <%= post.author.lastname %>
+              <% if (user && post.author && post.author._id?.toString() === user._id?.toString()) { %>
+              <span class="badge bg-primary ms-2">You</span>
+              <% } %>
+            </h6>
+            <!-- Follow button like Facebook -->
+            <span class="text-muted ms-2">•</span>
+            <small class="text-primary ms-2" style="cursor: pointer;">Follow</small>
+          </div>
 
-          </h5>
-
-          <time class="card-subtitle text-muted small" datetime="2025-03-29"><%= timeAgo(post.createdAt) %></time>
+          <div class="d-flex align-items-center">
+            <small class="text-muted" datetime="2025-03-29"><%= timeAgo(post.createdAt) %></small>
+            <i class="fas fa-globe-americas text-muted ms-2" style="font-size: 12px;"></i>
+          </div>
         </div>
 
         <!-- Dropdown Actions -->
         <div class="ms-auto">
-
-          <!-- <button type="button" class="btn btn-link btn-sm" data-mdb-ripple-init data-mdb-ripple-color="dark" data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="edit-post" data-title="Edit Post" data-id="<%= post._id %>" data-content="<%= post.description %>">Edit</button> -->
-
           <% if (user && post?.author && post.author._id?.toString() === user._id?.toString()) { %>
           <div class="dropdown">
-            <button class="btn btn-link btn-sm" type="button" id="dropdownMenuButton" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false">
-              Action
+            <button class="btn btn-link btn-sm text-muted p-1" type="button" id="dropdownMenuButton" data-mdb-dropdown-init data-mdb-ripple-init aria-expanded="false">
+              <i class="fas fa-ellipsis-h"></i>
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <li><button class="btn btn-link btn-sm dropdown-item" data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="edit-post" data-title="Edit Post" data-id="<%= post._id %>" data-content="<%= post.description %>" data-image="<%= post.post_image %>">Edit</button></li>
-              <li><button class="btn btn-link btn-sm dropdown-item deleteButton" data-action="delete-post" data-id="<%= post._id %>">Delete</button></li>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+              <li><button class="btn btn-link btn-sm dropdown-item" data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="edit-post" data-title="Edit Post" data-id="<%= post._id %>" data-content="<%= post.description %>" data-image="<%= post.post_image %>">
+                  <i class="fas fa-edit me-2"></i>Edit Post
+                </button></li>
+              <li><button class="btn btn-link btn-sm dropdown-item text-danger deleteButton" data-action="delete-post" data-id="<%= post._id %>">
+                  <i class="fas fa-trash me-2"></i>Delete
+                </button></li>
             </ul>
           </div>
+          <% } else { %>
+          <button class="btn btn-link btn-sm text-muted p-1">
+            <i class="fas fa-ellipsis-h"></i>
+          </button>
           <% } %>
-
         </div>
       </div>
 
       <!-- Post Content -->
-      <p style="cursor: pointer;" onclick="window.location = `/posts/<%= post._id %>/view`" class="card-text my-3">
-        <% if (!isExpand) { %>
-        <% if (post.description.length < 170) { %>
-        <%= post.description %>
-        <% } else { %>
-        <%= post.description.substring(0, 170) %>... <span class="fw-bold text-primary">See more</span>
+      <div style="cursor: pointer;" onclick="window.location = `/posts/<%= post._id %>/view`" class="mb-3">
+        <p class="card-text mb-3 lh-base">
+          <% if (!isExpand) { %>
+          <% if (post.description.length < 170) { %>
+          <%= post.description %>
+          <% } else { %>
+          <%= post.description.substring(0, 170) %>... <span class="fw-bold text-primary">See more</span>
+          <% } %>
+          <% } else { %>
+          <%= post.description %>
+          <% } %>
+        </p>
+
+        <% if (post.post_image) { %>
+        <div class="rounded-3 overflow-hidden mb-3">
+          <img src="<%= post.post_image %>" class="img-fluid w-100" style="height: 400px; object-fit: cover;" alt="<%= post.description %>" />
+        </div>
         <% } %>
-        <% } else { %>
-        <%= post.description %>
-        <% } %>
-      </p>
-
-      <% if (post.post_image) { %>
-      <img src="<%= post.post_image %>" class="img-fluid rounded-3 shadow" style="width: 100%; height: 380px; object-fit: cover;" alt="<%= post.description %>" />
-      <% } %>
-
-
-      <hr class="my-3">
-
-      <!-- Post Actions -->
-      <div class="d-flex gap-2">
-
-        <%- include('./interactionButton', { post }) %>
-
       </div>
+
+      <!-- Include your existing interaction buttons if needed -->
+
+      <%- include('./interactionButton', { post }) %>
+
 
     </div>
   </div>

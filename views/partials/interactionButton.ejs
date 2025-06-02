@@ -1,22 +1,68 @@
-<div class="btn-group btn-group-sm shadow-0 w-100" role="group" aria-label="Basic example">
+<!-- Engagement Stats (like Facebook) -->
+<div class="d-flex justify-content-between align-items-center mb-2 px-1">
+  <div class="d-flex align-items-center" data-mdb-tooltip-init data-mdb-html="true" title="
+    <div style='text-align: left;'>
+      <% if (post.userLikeName && post.userLikeName.length > 0) { %>
+        <% post.userLikeName.slice(0, 6).forEach(function(name) { %>
+          <div class='text-start text-wrap lh-sm'><%= name %></div>
+        <% }) %>
+      <% } else { %>
+        <div>No likes yet</div>
+      <% } %>
+     
+      <% if (post.userLikeName.length > 6) { %>
+        <div class='text-start text-wrap lh-sm'>and <%= post.userLikeName.length - 6 %> more</div>
+      <% } %>
+    </div>
+  ">
 
-  <button type="button" class="btn btn-outline-secondary flex-fill like-btn <%= post.isLikedByUser ? 'liked active' : '' %>" data-mdb-color="dark" data-post-id="<%= post._id %>" data-mdb-ripple-init <% if (!user) { %> disabled <% } %>>
-    <i class="fas <%= post.isLikedByUser ? 'fa-thumbs-down' : 'fa-thumbs-up' %> me-1"></i>
-    <%= post.isLikedByUser ? 'Liked' : 'Like' %>
-    <span class="badge badge-primary ms-1 like-count"><%= post.likeCount %></span>
+    <div class="d-flex me-2">
+      <!-- <span class="badge bg-primary rounded-circle p-1 me-1" style="width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;">
+        <i class="fas fa-thumbs-up" style="font-size: 10px;"></i>
+      </span> -->
+      <span class="badge bg-danger rounded-circle p-1 me-1" style="width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;">
+        <i class="fas fa-heart" style="font-size: 10px;"></i>
+      </span>
+    </div>
+    <!-- Engagement Stats -->
+    <small class="text-muted like-count"><%= post.likeCount %></small>
+
+  </div>
+  <div class="d-flex gap-3">
+    <small class="text-muted"><%= post.commentCount %> comments</small>
+    <small class="text-muted">0 shares</small>
+  </div>
+</div>
+
+<hr class="my-2">
+
+<!-- Post Actions (Facebook style) -->
+<div class="d-flex justify-content-around">
+  <button class="btn btn-link text-muted flex-fill py-2 d-flex align-items-center justify-content-center like-btn <%= post.isLikedByUser ? 'liked active' : '' %>" data-mdb-ripple-init <% if (!user) { %> disabled <% } %> data-post-id="<%= post._id %>">
+
+    <!-- Red Heart or Thumbs-Up -->
+    <% if (post.isLikedByUser) { %>
+    <span class="like-icon badge bg-danger rounded-circle p-1 me-1" style="width: 20px; height: 20px; display: flex; align-items: center; justify-content: center;">
+      <i class="fas fa-heart" style="font-size: 10px;"></i>
+    </span>
+    <% } else { %>
+    <i class="like-icon far fa-thumbs-up me-2"></i>
+    <% } %>
+
+    <!-- Like Label -->
+    <span class="like-label <%= post.isLikedByUser ? 'text-danger' : '' %>">
+      <%= post.isLikedByUser ? 'Liked' : 'Like' %>
+    </span>
   </button>
 
-  <button onclick="window.location = '/posts/<%= post._id %>/view'" type="button" class="btn btn-outline-secondary flex-fill" data-mdb-color="dark" data-mdb-ripple-init <% if (!user || isDisabled) { %> disabled <% } %>>
-    <i class="fa-solid fa-comment me-1"></i>
-    Comments
-    <span class="badge badge-primary ms-1"><%= post.commentCount %></span>
-    </a>
+
+  <button class="btn btn-link text-muted flex-fill py-2 d-flex align-items-center justify-content-center" data-mdb-ripple-init onclick="window.location = '/posts/<%= post._id %>/view'" <% if (!user || isDisabled) { %> disabled <% } %>>
+    <i class="far fa-comment me-2"></i>
+    <span>Comment</span>
   </button>
 
-  <!-- <button type="button" class="btn btn-outline-secondary flex-fill" data-mdb-color="dark" data-mdb-ripple-init <% if (!user) { %> disabled <% } %>>
-    <i class="fa-solid fa-share me-1"></i>
-    Share
-    <span class="badge badge-primary ms-1">0</span>
-  </button> -->
-
+  <button class="btn btn-link text-muted flex-fill py-2 d-flex align-items-center justify-content-center disabled" data-mdb-ripple-init>
+    <i class="fas fa-share-alt me-2"></i>
+    <span>Share</span>
+  </button>
 </div>

@@ -3,7 +3,7 @@
 <%- include('../partials/profileCard', { posts, totalDocuments }) %>
 
 <% if (user?._id && viewUser?._id && user._id.toString() === viewUser._id.toString()) { %>
-<%- include('../partials/postInput', { placeholder:"What's on your mind", dataAction: 'create-post', dataTitle: 'Create Post', dataId: 123 }) %>
+<%- include('../partials/postInput', { placeholder:"What's on your mind", dataAction: 'create-post', dataTitle: 'Create Post', dataId: 123, isBtnHide: false }) %>
 <% } %>
 
 <%- include('../partials/sectionLabel', { icon: 'fa-solid fa-rss', title: 'Other posts' }) %>

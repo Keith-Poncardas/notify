@@ -8,7 +8,7 @@
  */
 module.exports = async (req, res, next) => {
     try {
-        res.render('private/edit-profile');
+        res.render('users/edit');
     } catch (err) {
         next(err);
     }

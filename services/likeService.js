@@ -9,7 +9,7 @@ const { NotifyError } = require("../utils/notifyError")
  */
 const getAllLikesById = async (postId) => {
     try {
-        const likes = await Likes.find({ post: postId }).lean();
+        const likes = await Likes.find({ post: postId }).lean().populate('author');
         return likes;
     } catch (err) {
         throw new NotifyError(err.message);

@@ -1,3 +1,5 @@
+const logger = require('./logger');
+
 /**
  * Centralized error handling middleware for Express applications.
  * @param {Error} err - The error object caught by Express
@@ -13,6 +15,7 @@ const errorHandler = (err, req, res, next) => {
     if (!statusCode) statusCode = 500;
     if (!message) message = 'Internal Server Error';
 
+    logger.error(err.stack);
     res.render('error/404', { statusCode, message });
 };
 

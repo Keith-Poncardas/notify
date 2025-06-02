@@ -10,6 +10,6 @@ router.use('/likes', requireAuth, require('./post/like'));
 router.use('/comments', requireAuth, require('./comment/comment'));
 router.use('/', require('./search/results'));
 router.use('/', require('./user/profile'));
-router.use(['/page/:pageNumber', '/'], postController.getPost);
+router.use('/', require('./post/post'));
 
 module.exports = router;

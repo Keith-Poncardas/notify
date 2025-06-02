@@ -21,8 +21,7 @@ module.exports = async (req, res, next) => {
         const cachedUsers = await getCache(cacheKeyUsers);
 
         if (cachedUsers) {
-            logger.success('USERS is cached');
-            return res.render('public/users', {
+            return res.render('users/list', {
                 users: cachedUsers.users,
                 currentPage: cachedUsers.currentPage,
                 totalPages: cachedUsers.totalPages,
@@ -30,7 +29,6 @@ module.exports = async (req, res, next) => {
             });
         };
 
-        console.log(req.params.pageNumber);
         const usersList = await getUsers(req.params);
 
         if (!usersList) {
@@ -41,7 +39,7 @@ module.exports = async (req, res, next) => {
 
         await setCache(cacheKeyUsers, { users, currentPage, totalDocuments, totalPages });
 
-        res.render('public/users', { users, currentPage, totalDocuments, totalPages });
+        res.render('users/list', { users, currentPage, totalDocuments, totalPages });
     } catch (err) {
         next(err);
     }

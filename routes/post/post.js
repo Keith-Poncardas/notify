@@ -9,5 +9,7 @@ router.post('/create', requireAuth, upload.single('postImage'), postController.c
 router.put('/:id/edit', requireAuth, validateObjectId('id'), upload.single('postImage'), postController.editPost);
 router.delete('/:id/delete', validateObjectId('id'), requireAuth, postController.deletePost);
 router.get('/:id/view', validateObjectId('id'), postController.viewPost);
+router.get('/page/:pageNumber', postController.getPost);
+router.get('/', postController.getPost);
 
 module.exports = router;

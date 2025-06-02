@@ -66,7 +66,7 @@ const editComment = async (commentId, commentData) => {
         /**
          * Find the comment by ID then update
          */
-        const comment = await Comments.findByIdAndUpdate(commentId, commentData);
+        const comment = await Comments.findByIdAndUpdate(commentId, commentData).populate('post');
 
         return comment;
     } catch (err) {
@@ -136,7 +136,7 @@ const deleteComment = async (commentId) => {
         /**
         * Delete comment by ID
         */
-        const comment = await Comments.findOneAndDelete({ _id: commentId });
+        const comment = await Comments.findOneAndDelete({ _id: commentId }).populate('post');
 
         /**
          * Check if comment is not found

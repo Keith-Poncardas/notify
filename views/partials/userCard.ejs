@@ -1,18 +1,31 @@
-<div class="card bg-body-tertiary p-3 mb-3">
-  <div class="d-flex">
+<div class="card bg-body-tertiary p-3 mb-3 shadow-sm">
+  <div class="d-flex align-items-center">
 
-    <!-- <a href="/home/<%= user._id %>/profile">
-      <img src="<%= user.profile_image %>" class="rounded-circle shadow-sm border border-primary border-2 p-1 me-3" height="42" width="42" alt="Profile picture of Keith Poncardas" loading="lazy" decoding="async" />
-    </a> -->
-
-    <div class="me-3">
-      <%- include('./avatar', { user, dropdown: false, width: 42, height: 42 }) %>
+    <div class="me-3 flex-shrink-0">
+      <%- include('./avatar', { 
+        user, 
+        dropdown: false, 
+        width: 48, 
+        height: 48,
+        className: "shadow-sm border border-primary border-2 p-1" 
+      }) %>
     </div>
 
-    <div>
-      <h5 class="card-title fs-6 m-0" id="post-author"><%= user.firstname %> <%= user.lastname %></h5>
-      <time class="card-subtitle text-muted small" datetime="2025-03-29">@<%= user.username %></time>
+    <div class="flex-grow-1">
+      <h5 class="card-title fs-6 mb-0 fw-semibold text-truncate" id="post-author">
+        <%= user.firstname %> <%= user.lastname %>
+      </h5>
+      <p class="card-subtitle text-muted small mb-0 text-truncate">
+        @<%= user.username %>
+      </p>
     </div>
+
+    <!-- Optional: Add more interactive elements if needed -->
+    <!-- <div class="flex-shrink-0 ms-2">
+      <button class="btn btn-sm btn-outline-primary rounded-circle">
+        <i class="fas fa-ellipsis-h"></i>
+      </button>
+    </div> -->
 
   </div>
 </div>

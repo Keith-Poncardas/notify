@@ -1,14 +1,48 @@
 <% if (user) { %>
 
-<!-- Dummy Post Input -->
-<div class="card bg-body-tertiary p-3">
-  <div class="d-flex align-items-center gap-2">
+<!-- Improved Post Input -->
+<div class="card bg-body-tertiary shadow-sm">
+  <div class="card-body p-3">
 
-    <!-- Avatar Partial -->
-    <%- include('./avatar', { dropdown: false, width: 35, height: 35 }) %>
+    <!-- Main Input Section -->
+    <div class="d-flex align-items-center gap-2">
+      <!-- Avatar -->
+      <div class="flex-shrink-0">
+        <%- include('./avatar', { dropdown: false, width: 35, height: 35 }) %>
+      </div>
 
-    <!-- Readonly dummy input triggers modal -->
-    <input type="text" class="form-control rounded-pill ps-3 border-0" placeholder="<%= placeholder %>, <%= user.firstname %>" readonly style="cursor: pointer;" data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="<%= dataAction %>" data-title="<%= dataTitle %>" data-id="<%= dataId %>" data-user-id="<%= user._id %>" />
+      <!-- Post Input -->
+      <div class="flex-grow-1">
+        <input type="text" class="form-control rounded-pill ps-3 border-0 bg-body-secondary" placeholder="<%= placeholder %>, <%= user.firstname %>" readonly style="cursor: pointer;" data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="<%= dataAction %>" data-title="<%= dataTitle %>" data-id="<%= dataId %>" data-user-id="<%= user._id %>" />
+      </div>
+    </div>
+
+    <!-- Action Buttons (Responsive) -->
+    <% if (!isBtnHide) { %>
+    <div class="d-flex flex-wrap justify-content-around mt-3 pt-2 border-top">
+      <!-- Photo/Video -->
+      <button class="btn btn-link text-muted d-flex align-items-center justify-content-center flex-fill py-2 px-1" data-mdb-ripple-init data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="<%= dataAction %>" data-title="<%= dataTitle %>" data-id="<%= dataId %>" data-user-id="<%= user._id %>">
+        <i class="fas fa-images text-success me-1 me-sm-2"></i>
+        <span class="d-none d-sm-inline" style="font-weight: 500;">Photo/video</span>
+        <span class="d-sm-none" style="font-weight: 500; font-size: 12px;">Photo</span>
+      </button>
+
+      <!-- Live Video -->
+      <button class="btn btn-link text-muted d-flex align-items-center justify-content-center flex-fill py-2 px-1 disabled" data-mdb-ripple-init data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="<%= dataAction %>" data-title="Go Live" data-id="<%= dataId %>" data-user-id="<%= user._id %>">
+        <i class="fas fa-video text-danger me-1 me-sm-2"></i>
+        <span class="d-none d-sm-inline" style="font-weight: 500;">Live video</span>
+        <span class="d-sm-none" style="font-weight: 500; font-size: 12px;">Live</span>
+      </button>
+
+      <!-- Feeling/Activity -->
+
+      <button class="btn btn-link text-muted d-flex align-items-center justify-content-center flex-fill py-2 px-1 disabled" data-mdb-ripple-init data-mdb-toggle="modal" data-mdb-target="#actionModal" data-action="<%= dataAction %>" data-title="Feeling/Activity" data-id="<%= dataId %>" data-user-id="<%= user._id %>">
+        <i class="fas fa-smile text-warning me-1 me-sm-2"></i>
+        <span class="d-none d-sm-inline" style="font-weight: 500;">Feeling/activity</span>
+        <span class="d-sm-none" style="font-weight: 500; font-size: 12px;">Feeling</span>
+      </button>
+    </div>
+    <% } %>
 
   </div>
 </div>
