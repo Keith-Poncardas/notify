@@ -3,9 +3,9 @@ const logger = require('../utils/logger');
 
 const client = createClient({
     username: 'default',
-    password: process.env.REDIS_PASS,
+    password: process.env.REDIS_PASS || null,
     socket: {
-        host: process.env.REDIS_HOST,
+        host: process.env.REDIS_HOST || null,
         port: 10361
     }
 });
