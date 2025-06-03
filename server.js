@@ -11,17 +11,11 @@ const { pageNotFound } = require('./utils/pageNotFound');
 const { errorHandler } = require('./utils/centralizedErrorHandler');
 const compression = require('compression');
 
-
-// const publicRoutes = require('./routes/public');
-// const privateRoutes = require('./routes/private');
-// const user = require('./routes/user');
-
 const minifyHTML = require('./utils/HTMLMinifier');
 const { timeFormatterGlobal } = require('./utils/timeFormatter');
 const authenticateUser = require('./middleware/authenticate');
 const cookieParser = require('cookie-parser');
 const seoBuilder = require('./utils/seoBuilder');
-
 
 const PORT = process.env.PORT || 3000;
 
@@ -45,23 +39,8 @@ app.use(seoBuilder.middleware());
 
 app.use(timeFormatterGlobal);
 
-
 app.engine('ejs', ejsMate);
 
-// app.use('/home', publicRoutes);
-// app.use('/private', requireAuth, privateRoutes);
-// app.use('/auth', user);
-
-// const userRoutes = require('./routes/user');
-// const postRoutes = require('./routes/post');
-// const commentRoutes = require('./routes/comment');
-// const likeRoutes = require('./routes/like');
-
-// app.get('/', homepage);
-// app.use('/user', userRoutes);
-// app.use('/posts', postRoutes);
-// app.use('/comments', requireAuth, commentRoutes);
-// app.use('/likes', requireAuth, likeRoutes);
 const mainRouter = require('./routes');
 
 app.use('/', mainRouter);
