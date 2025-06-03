@@ -1,29 +1,27 @@
 <nav class="navbar bg-body-tertiary sticky-top shadow-sm">
-  <div class="container d-flex align-items-center justify-content-between flex-wrap gap-0">
-
+  <div class="container">
     <!-- Brand -->
-    <%- include('./brand', { src: '/img/brand.png', location: '/' }); %>
+    <div class="navbar-brand">
+      <%- include('./brand', { src: '/img/brand.png', location: '/' }); %>
+    </div>
 
     <% if (user) { %>
-    <!-- Search and Avatar Row -->
-    <div class="d-flex flex-grow-1 gap-3">
-
-      <!-- Search Form -->
+    <!-- Search Form - Always visible, centered -->
+    <div class="flex-fill mx-3 mx-md-4" style="max-width: 400px;">
       <%- include('./searchForm', { placeholder: 'Search' }); %>
+    </div>
 
-      <!-- Avatar and Users Icon -->
-      <div class="d-flex align-items-center flex-shrink-0">
-        <a class="text-muted me-3" href="/users">
-          <i class="fas fa-users"></i>
-        </a>
-        <%- include('./avatarDropdown') %>
-      </div>
+    <!-- Right side actions -->
+    <div class="d-flex align-items-center gap-3">
+      <a class="text-muted" href="/users" title="Browse Users">
+        <i class="fas fa-users fs-5"></i>
+      </a>
+      <%- include('./avatarDropdown') %>
     </div>
     <% } else { %>
-
     <!-- Not Logged In -->
-    <div class="d-flex align-items-center ms-auto gap-2 mt-2 mt-lg-0">
-      <button type="button" class="btn btn-sm btn-link px-3" data-mdb-toggle="modal" data-mdb-target="#loginModal">
+    <div class="d-flex align-items-center gap-2">
+      <button type="button" class="btn btn-sm btn-link text-muted" data-mdb-toggle="modal" data-mdb-target="#loginModal">
         Login
       </button>
       <button type="button" class="btn btn-sm btn-primary" data-mdb-toggle="modal" data-mdb-target="#signupModal">
@@ -31,6 +29,5 @@
       </button>
     </div>
     <% } %>
-
   </div>
 </nav>
