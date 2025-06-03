@@ -9,6 +9,7 @@ const logger = require('./utils/logger');
 const connectDB = require('./config/db');
 const { pageNotFound } = require('./utils/pageNotFound');
 const { errorHandler } = require('./utils/centralizedErrorHandler');
+const compression = require('compression');
 
 
 // const publicRoutes = require('./routes/public');
@@ -25,6 +26,8 @@ const seoBuilder = require('./utils/seoBuilder');
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
+app.use(compression());
 
 app.use(cookieParser());
 app.use(authenticateUser);
