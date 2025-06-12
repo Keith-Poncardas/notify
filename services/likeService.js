@@ -1,5 +1,52 @@
+const { filter } = require("compression");
 const Likes = require("../models/Likes");
-const { NotifyError } = require("../utils/notifyError")
+const Users = require("../models/Users");
+const { NotifyError } = require("../utils/notifyError");
+
+/**
+ * Retrieves all posts that a user has liked
+ * @param {string} username - The username of the user whose liked posts are being retrieved
+ * @returns {Promise<Array>} Array of post objects that the user has liked
+ * @throws {NotifyError} If user is not found or any other error occurs during the process
+ */
+const getUsersLikePosts = async (query = {}, username, limit = 15) => {
+    try {
+        if (!query) throw new NotifyError('Missing Query');
+
+        const { pageNumber = 1 } = query;
+        const currentPage = parseInt(pageNumber);
+
+        const user = await Users.findOne({ username });
+        if (!user) throw new NotifyError("User not found");
+
+        const likes = await Likes.find({ author: user._id })
+            .skip((currentPage - 1) * limit)
+            .limit(limit)
+            .sort({ createdAt: -1 })
+            .populate({
+                path: 'post',
+                populate: {
+                    path: 'author', // this populates post.author
+                    select: 'firstname lastname username profile_image' // optional, for optimization
+                }
+            })
+            .lean();
+
+
+        const totalDocuments = await Likes.countDocuments({ author: user._id });
+        const totalPages = Math.ceil(totalDocuments / limit);
+
+        const likedPosts = likes
+            .filter(like => like.post && like.post._id) // skip invalid or empty post references
+            .map(like => like.post);
+        // extract post data
+
+        return { likedPosts, currentPage, totalDocuments, totalPages };
+    } catch (err) {
+        throw new NotifyError(err.message);
+    }
+};
+
 
 /**
  * Retrieves all likes associated with a specific post
@@ -116,5 +163,6 @@ module.exports = {
     deleteLike,
     findLike,
     countLike,
-    getAllLikesById
+    getAllLikesById,
+    getUsersLikePosts
 };

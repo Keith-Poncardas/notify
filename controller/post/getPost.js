@@ -1,7 +1,5 @@
-const { getPosts } = require("../../services/postService");
-const { getCache, setCache } = require("../../utils/cache");
-const enrichPost = require("../../utils/enrichedPost");
-const logger = require("../../utils/logger");
+const { getPaginatedPost } = require("../../services/postService");
+const { getOrSetCache } = require("../../utils/cache");
 
 /**
  * Renders the paginated list of posts
@@ -13,48 +11,38 @@ const logger = require("../../utils/logger");
  * @returns {void} Renders the homepage template with enriched posts data
  */
 module.exports = async (req, res, next) => {
-    const user = res.locals.user;
+    const page = parseInt(req.query.page) || 1;
+    const limit = 10;
+    const query = req.query.q || '';
+    const username = req.query.username || null;
 
-    const page = parseInt(req.params.pageNumber) || 1;
-    const limit = 15;
+    const user = res.locals.user || null;
+    const userId = user ? user._id.toString() : 'guest';
 
-    const cacheKey = `posts:page=${page}:limit=${limit}`
+    console.log(`USER ID GET POST: ${userId}`);
+
+    // ✅ Smarter cache key (considering username + query, optional)
+    const cacheKey = `posts:page=${page}:limit=${limit}:user=${userId}`;
 
     try {
-        const cachedPosts = await getCache(cacheKey);
 
-        if (cachedPosts) {
-
-            const postWithLikes = await Promise.all(cachedPosts.posts.map((post) => enrichPost(post, user)));
-
-            return res.render('home/index', {
-                posts: postWithLikes,
-                currentPage: cachedPosts.currentPage,
-                totalPages: cachedPosts.totalPages,
-                totalDocuments: cachedPosts.totalDocuments
+        const { posts, pagination } = await getOrSetCache(cacheKey, async () => {
+            return await getPaginatedPost({
+                page,
+                limit,
+                username,
+                query,
+                userId
             });
+        }, 60); // cache for 60 seconds
 
-        };
-
-        const listOfPosts = await getPosts(req.params);
-
-        if (!listOfPosts) {
-            throw new NotifyError('Failed to render posts', 500);
-        };
-
-        const { posts, currentPage, totalPages, totalDocuments } = listOfPosts;
-
-        await setCache(cacheKey, { posts, currentPage, totalPages, totalDocuments });
-
-        const postsWithLikes = await Promise.all(
-            posts.map((post) => enrichPost(post, user))
-        );
+        console.log(posts[0]);
 
         res.render('home/index', {
-            posts: postsWithLikes,
-            currentPage,
-            totalPages,
-            totalDocuments
+            posts,
+            currentPage: pagination.currentPage,
+            totalPages: pagination.totalPages,
+            totalDocuments: pagination.totalDocuments
         });
 
     } catch (err) {

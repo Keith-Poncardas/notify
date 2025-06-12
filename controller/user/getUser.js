@@ -12,6 +12,8 @@ const logger = require("../../utils/logger");
 module.exports = async (req, res, next) => {
     const { pageNumber } = req.params;
 
+    console.log(req.path);
+
     const page = parseInt(pageNumber) || 1;
     const limit = 15;
 

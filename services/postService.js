@@ -1,6 +1,8 @@
+const { default: mongoose } = require("mongoose");
 const { findOneAndDelete } = require("../models/Comments");
 const Posts = require("../models/Posts");
-const { NotifyError } = require("../utils/notifyError")
+const { NotifyError } = require("../utils/notifyError");
+const Users = require("../models/Users");
 
 /**
  * Creates a new post in the database
@@ -147,6 +149,162 @@ const getPosts = async (query, userId = null, limit = 15) => {
     }
 };
 
+
+const getPaginatedPost = async ({ page = 1, limit = 10, username, query, userId }) => {
+    try {
+        const currentPage = parseInt(page);
+        const skip = (currentPage - 1) * limit;
+
+        // Step 1: Build the filter
+        const matchStage = {};
+
+        if (query?.trim()) {
+            matchStage.description = { $regex: query.trim(), $options: 'i' };
+        }
+
+        if (username) {
+            const user = await Users.findOne({ username }).select('_id');
+            if (!user) return emptyPaginationResult(currentPage, limit);
+            matchStage.author = user._id;
+        }
+
+        // Step 2: Count total matching documents
+        const totalDocuments = await Posts.countDocuments(matchStage);
+        const totalPages = Math.ceil(totalDocuments / limit);
+
+        // Step 3: Main aggregation
+        const safeUserId = mongoose.Types.ObjectId.isValid(userId) ? new mongoose.Types.ObjectId(userId) : null;
+
+        const pipeline = [
+            { $match: matchStage },
+
+            // Join author
+            {
+                $lookup: {
+                    from: 'users',
+                    localField: 'author',
+                    foreignField: '_id',
+                    as: 'author'
+                }
+            },
+            { $unwind: { path: '$author', preserveNullAndEmptyArrays: true } },
+
+            // Join likes
+            {
+                $lookup: {
+                    from: 'likes',
+                    localField: '_id',
+                    foreignField: 'post',
+                    as: 'likes'
+                }
+            },
+
+            // Join comments
+            {
+                $lookup: {
+                    from: 'comments',
+                    localField: '_id',
+                    foreignField: 'post',
+                    as: 'comments'
+                }
+            },
+
+            // Add computed fields
+            {
+                $addFields: {
+                    likesCount: { $size: '$likes' },
+                    commentsCount: { $size: '$comments' },
+                    authorUsername: '$author.username',
+
+                    // ✅ Fixed conditional like detection
+                    isLikedByCurrentUser: mongoose.Types.ObjectId.isValid(userId)
+                        ? {
+                            $in: [
+                                safeUserId,
+                                {
+                                    $map: {
+                                        input: '$likes',
+                                        as: 'like',
+                                        in: '$$like.author'
+                                    }
+                                }
+                            ]
+                        }
+                        : { $literal: false },// ⛔ Prevent $map if no user
+
+                    // ✅ Only show likedByCurrentUser if userId is present
+                    likedByCurrentUser: mongoose.Types.ObjectId.isValid(userId)
+                        ? {
+                            $slice: [
+                                {
+                                    $map: {
+                                        input: {
+                                            $filter: {
+                                                input: '$likes',
+                                                as: 'like',
+                                                cond: {
+                                                    $ne: ['$$like.author', safeUserId]
+                                                }
+                                            }
+                                        },
+                                        as: 'like',
+                                        in: '$$like.authorName'
+                                    }
+                                },
+                                6
+                            ]
+                        }
+                        : [] // ⛔ Return empty array if no user
+                }
+
+            },
+
+            // Clean output
+            {
+                $project: {
+                    likes: 0,
+                    comments: 0,
+                    'author.password': 0,
+                    'author.public_id': 0,
+                    'author.bio': 0
+                }
+            },
+
+            { $sort: { createdAt: -1 } },
+            { $skip: skip },
+            { $limit: limit }
+        ];
+
+        const posts = await Posts.aggregate(pipeline);
+
+        return {
+            posts,
+            pagination: {
+                currentPage,
+                limit,
+                totalDocuments,
+                totalPages,
+                hasNextPage: currentPage < totalPages
+            }
+        };
+
+    } catch (err) {
+        throw new NotifyError(`Failed to get paginated posts: ${err.message}`);
+    }
+};
+
+const emptyPaginationResult = (currentPage, limit) => ({
+    posts: [],
+    pagination: {
+        currentPage,
+        limit,
+        totalDocuments: 0,
+        totalPages: 0,
+        hasNextPage: false
+    }
+});
+
+
 /**
  * Deletes a post from the database by its ID
  * @param {string} postId - The ID of the post to delete
@@ -183,5 +341,6 @@ module.exports = {
     viewPost,
     editPost,
     getPosts,
-    deletePost
+    deletePost,
+    getPaginatedPost
 };

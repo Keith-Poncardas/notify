@@ -1,6 +1,7 @@
 const { editUser } = require('../../services/userService');
 const uploadToCloudinary = require('../../utils/claudinaryUpload');
 const redis = require('../../config/redisClient');
+const deleteKeysByPattern = require('../../utils/deleteKeysByPattern');
 
 /**
  * Updates user profile information
@@ -21,6 +22,7 @@ module.exports = async (req, res, next) => {
         const profileData = { userId, firstname, lastname, username, bio };
 
         await redis.del(`userProfile:${username}`);
+        await deleteKeysByPattern(`userPosts:${username}:page=*:limit=*`);
 
         if (req.file) {
             const result = await uploadToCloudinary(req.file.buffer, 'Profile Image');

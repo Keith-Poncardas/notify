@@ -1,6 +1,6 @@
 <% layout('layout/main') %>
 
-<%- include('../partials/profileCard', { posts, totalDocuments }) %>
+<%- include('../partials/profileCard', { posts, totalDocuments, path }) %>
 
 <% if (user?._id && viewUser?._id && user._id.toString() === viewUser._id.toString()) { %>
 <%- include('../partials/postInput', { placeholder:"What's on your mind", dataAction: 'create-post', dataTitle: 'Create Post', dataId: 123, isBtnHide: false }) %>

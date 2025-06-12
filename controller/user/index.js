@@ -3,5 +3,6 @@ module.exports = {
     viewUser: require('./viewUser'),
     deleteUser: require('./deleteUser'),
     editUser: require('./editUser'),
-    getEditUserPage: require('./getEditUserPage')
+    getEditUserPage: require('./getEditUserPage'),
+    getUserLikes: require('./getUserLikes')
 };

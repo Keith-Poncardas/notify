@@ -44,6 +44,7 @@ module.exports = async (req, res, next) => {
 
         await deleteKeysByPattern('posts:page=*:limit=*');
         await deleteKeysByPattern(`userPosts:${username}:page=*:limit=*`);
+        await deleteKeysByPattern(`userPostsLikes:${username}:page=*:limit=*`);
 
         res.status(201).json({
             success: true,

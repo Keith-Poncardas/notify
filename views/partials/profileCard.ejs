@@ -18,8 +18,8 @@
           <h3 class="mb-1"><%= viewUser.firstname %> <%= viewUser.lastname %></h3>
           <div class="d-flex gap-3" style="font-size: 13px;">
             <!-- <p class="text-muted mb-2"><%= totalDocuments || 0 %> Posts</p> -->
-            <p class="text-muted mb-2"><span class="fw-bolder"><%= viewUser.following?.length || 5 %>K</span> Following</p>
-            <p class="text-muted mb-2"><span class="fw-bolder"><%= viewUser.followers?.length || 12.5 %>K</span> Followers</p>
+            <p class="text-muted mb-2"><span class="fw-bolder"><%= viewUser.following?.length || 0 %></span> Following</p>
+            <p class="text-muted mb-2"><span class="fw-bolder"><%= viewUser.followers?.length || 0 %></span> Followers</p>
           </div>
         </div>
 
@@ -52,6 +52,6 @@
     </div>
   </div>
 
-  <%- include('../partials/profileNavigationTabs') %>
+  <%- include('../partials/profileNavigationTabs', { viewUser, path, currentPage }) %>
 
 </div>

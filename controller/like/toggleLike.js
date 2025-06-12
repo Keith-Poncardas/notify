@@ -1,6 +1,7 @@
 const { findLike, deleteLike, createLike, countLike } = require("../../services/likeService");
 const deleteKeysByPattern = require("../../utils/deleteKeysByPattern");
 const redis = require('../../config/redisClient');
+const { getUser, getUserByUsername } = require("../../services/userService");
 
 /**
  * Toggles like/unlike status for a post and returns updated like information
@@ -24,13 +25,18 @@ module.exports = async (req, res, next) => {
     try {
         const existingLike = await findLike(userId, postId);
 
-        await redis.del(`likes:${postId}`);
-
         if (existingLike) {
             await deleteLike(existingLike._id);
         } else {
             await createLike(userId, postId);
         }
+
+        const user = await getUser(userId);
+        const username = user.username;
+        console.log(username);
+
+        await deleteKeysByPattern('posts:page=*:limit=*');
+        await deleteKeysByPattern(`userPosts:${username}:page=*:limit=*`);
 
         const likeCount = await countLike(postId);
 

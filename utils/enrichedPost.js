@@ -8,9 +8,9 @@ const enrichPost = async (post, user) => {
 
     function isLiked(user, data) {
         return user
-            ? data.some((like) => like.author._id.toString() === user._id.toString())
+            ? data.some((like) => like?.author?._id?.toString?.() === user._id.toString())
             : false;
-    };
+    }
 
     function usersLike(data) {
 
@@ -19,11 +19,14 @@ const enrichPost = async (post, user) => {
             return [];
         }
 
-        return data.map((user) => {
-            const firstname = user?.author?.firstname || "Unknown";
-            const lastname = user?.author?.lastname || "";
-            return `${firstname} ${lastname}`.trim();
-        });
+        return data
+            .filter(user => user?.author)
+            .map(user => {
+                const firstname = user.author.firstname || "Unknown";
+                const lastname = user.author.lastname || "";
+                return `${firstname} ${lastname}`.trim();
+            });
+
     }
 
     const likesKey = `likes:${post._id}`;

@@ -1,0 +1,15 @@
+<% layout('layout/main') %>
+
+<%- include('../partials/profileCard', { posts, totalDocuments, path, currentPage }) %>
+
+<%- include('../partials/sectionLabel', { icon: 'fa-solid fa-rss', title: 'Liked Posts' }) %>
+
+<%- include('../partials/postsLoop', { posts }); %>
+
+<% if (posts.length !== 0) { %>
+<%- include('../partials/pagination', { 
+    currentPage, 
+    totalPages, 
+    extendedPath: `/${viewUser.username}/likes` 
+}) %>
+<% } %>

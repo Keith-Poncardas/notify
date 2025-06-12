@@ -1,4 +1,4 @@
-const { createUser } = require("../../services/userService");
+const { createUser, getUser } = require("../../services/userService");
 const deleteKeysByPattern = require("../../utils/deleteKeysByPattern");
 const generateToken = require("../../utils/generateToken");
 
@@ -11,6 +11,7 @@ const generateToken = require("../../utils/generateToken");
  * @throws {NotifyError} - Throws error if user creation fails
  */
 module.exports = async (req, res, next) => {
+
     try {
         const user = await createUser({ userData: req.body });
 
@@ -25,6 +26,7 @@ module.exports = async (req, res, next) => {
         const token = generateToken({ user });
         res.cookie('token', token, { httpOnly: false });
 
+        await deleteKeysByPattern('posts:page=*:limit=*');
         await deleteKeysByPattern('users:page=*:limit=*');
 
         res.status(201).json({
