@@ -29,6 +29,7 @@ module.exports = async (req, res, next) => {
 
         await deleteKeysByPattern(`posts:page=*:limit=*:user=${username}`);
         await deleteKeysByPattern(`userPosts:${username}:page=*:limit=*:user=${user._id}`);
+        await deleteKeysByPattern(`userPostsLikes:${username}:page=*:limit=*:user=${user._id}`);
 
         const token = generateToken({ user });
         res.cookie('token', token, { httpOnly: true });

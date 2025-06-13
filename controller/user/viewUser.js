@@ -22,7 +22,7 @@ module.exports = async (req, res, next) => {
     const page = parseInt(req.params.pageNumber) || 1;
     const limit = 15;
 
-    const cacheKey = `userPosts:${username}:page=${page}:limit=${limit}user=${userId}`;
+    const cacheKey = `userPosts:${username}:page=${page}:limit=${limit}:user=${userId}`;
 
     try {
         const { userProfile, userPosts } = await getOrSetCache(cacheKey, async () => {

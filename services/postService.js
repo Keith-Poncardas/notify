@@ -3,6 +3,7 @@ const { findOneAndDelete } = require("../models/Comments");
 const Posts = require("../models/Posts");
 const { NotifyError } = require("../utils/notifyError");
 const Users = require("../models/Users");
+const Likes = require("../models/Likes");
 
 /**
  * Creates a new post in the database
@@ -149,33 +150,48 @@ const getPosts = async (query, userId = null, limit = 15) => {
     }
 };
 
-
-const getPaginatedPost = async ({ page = 1, limit = 10, username, query, userId }) => {
+const getPaginatedPost = async ({ page = 1, limit = 10, username, query, userId, likedOnly = false }) => {
     try {
         const currentPage = parseInt(page);
         const skip = (currentPage - 1) * limit;
 
-        // Step 1: Build the filter
         const matchStage = {};
 
         if (query?.trim()) {
             matchStage.description = { $regex: query.trim(), $options: 'i' };
         }
 
-        if (username) {
+        const safeUserId = mongoose.Types.ObjectId.isValid(userId) ? new mongoose.Types.ObjectId(userId) : null;
+
+
+        let pipeline = [];
+
+        // 🔁 Handle likedOnly logic
+        if (likedOnly) {
+            // ❌ Prevent showing liked posts of others
+            if (!safeUserId || (username && userId !== safeUserId.toString())) {
+                return emptyPaginationResult(currentPage, limit);
+            }
+
+            const likedPostIds = await Likes.find({ author: safeUserId }).distinct('post');
+            if (likedPostIds.length === 0) {
+                return emptyPaginationResult(currentPage, limit);
+            }
+
+            matchStage._id = { $in: likedPostIds };
+
+        } else if (username) {
             const user = await Users.findOne({ username }).select('_id');
             if (!user) return emptyPaginationResult(currentPage, limit);
             matchStage.author = user._id;
         }
 
-        // Step 2: Count total matching documents
+        // Step 2: Count total documents
         const totalDocuments = await Posts.countDocuments(matchStage);
         const totalPages = Math.ceil(totalDocuments / limit);
 
-        // Step 3: Main aggregation
-        const safeUserId = mongoose.Types.ObjectId.isValid(userId) ? new mongoose.Types.ObjectId(userId) : null;
-
-        const pipeline = [
+        // Step 3: Build aggregation
+        pipeline = [
             { $match: matchStage },
 
             // Join author
@@ -209,15 +225,14 @@ const getPaginatedPost = async ({ page = 1, limit = 10, username, query, userId 
                 }
             },
 
-            // Add computed fields
+            // Computed fields
             {
                 $addFields: {
                     likesCount: { $size: '$likes' },
                     commentsCount: { $size: '$comments' },
                     authorUsername: '$author.username',
 
-                    // ✅ Fixed conditional like detection
-                    isLikedByCurrentUser: mongoose.Types.ObjectId.isValid(userId)
+                    isLikedByCurrentUser: safeUserId
                         ? {
                             $in: [
                                 safeUserId,
@@ -230,10 +245,9 @@ const getPaginatedPost = async ({ page = 1, limit = 10, username, query, userId 
                                 }
                             ]
                         }
-                        : { $literal: false },// ⛔ Prevent $map if no user
+                        : { $literal: false },
 
-                    // ✅ Only show likedByCurrentUser if userId is present
-                    likedByCurrentUser: mongoose.Types.ObjectId.isValid(userId)
+                    likedByCurrentUser: safeUserId
                         ? {
                             $slice: [
                                 {
@@ -254,12 +268,10 @@ const getPaginatedPost = async ({ page = 1, limit = 10, username, query, userId 
                                 6
                             ]
                         }
-                        : [] // ⛔ Return empty array if no user
+                        : []
                 }
-
             },
 
-            // Clean output
             {
                 $project: {
                     likes: 0,

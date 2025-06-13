@@ -1,4 +1,5 @@
 const { editPost } = require("../../services/postService");
+const { getUser } = require("../../services/userService");
 const uploadToCloudinary = require("../../utils/claudinaryUpload");
 const deleteKeysByPattern = require("../../utils/deleteKeysByPattern");
 
@@ -18,8 +19,9 @@ const deleteKeysByPattern = require("../../utils/deleteKeysByPattern");
  * @throws {Error} Forwards any errors to the next middleware
  */
 module.exports = async (req, res, next) => {
+    const user = res.locals.user || null;
+    const userId = user ? user._id.toString() : 'guest';
     try {
-
 
         const { description } = req.body;
         const postEditData = { description };
@@ -40,7 +42,11 @@ module.exports = async (req, res, next) => {
             });
         };
 
-        await deleteKeysByPattern('posts:page=*:limit=*');
+        const { username } = await getUser(userId);
+
+        await deleteKeysByPattern(`posts:page=*:limit=*:user=${userId}`);
+        await deleteKeysByPattern(`userPosts:${username}:page=*:limit=*:user=${userId}`);
+        await deleteKeysByPattern(`userPostsLikes:${username}:page=*:limit=*:user=${userId}`);
 
         res.status(201).json({
             success: true,

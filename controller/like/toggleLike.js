@@ -20,7 +20,9 @@ const { getUser, getUserByUsername } = require("../../services/userService");
  */
 module.exports = async (req, res, next) => {
     const { postId } = req.body;
-    const userId = res.locals.user._id.toString();
+
+    const user = res.locals.user || null;
+    const userId = user ? user._id.toString() : 'guest';
 
     try {
         const existingLike = await findLike(userId, postId);
@@ -35,8 +37,9 @@ module.exports = async (req, res, next) => {
         const username = user.username;
         console.log(username);
 
-        await deleteKeysByPattern('posts:page=*:limit=*');
-        await deleteKeysByPattern(`userPosts:${username}:page=*:limit=*`);
+        await deleteKeysByPattern(`posts:page=*:limit=*:user=${userId}`);
+        await deleteKeysByPattern(`userPosts:${username}:page=*:limit=*:user=${userId}`);
+        await deleteKeysByPattern(`userPostsLikes:${username}:page=*:limit=*:user=${userId}`);
 
         const likeCount = await countLike(postId);
 

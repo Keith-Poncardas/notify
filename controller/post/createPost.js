@@ -18,13 +18,14 @@ const deleteKeysByPattern = require("../../utils/deleteKeysByPattern");
  * @returns {Promise<Object>} Created post object
  */
 module.exports = async (req, res, next) => {
-    const userId = res.locals.user._id.toString();
+    const user = res.locals.user || null;
+    const userId = user ? user._id.toString() : 'guest';
 
     try {
         const { username } = await getUser(userId);
 
         const { description } = req.body;
-        const postData = { description };
+        const postData = { description, type: 'post' };
 
         if (req.file) {
             const result = await uploadToCloudinary(req.file.buffer);
@@ -42,9 +43,8 @@ module.exports = async (req, res, next) => {
             });
         };
 
-        await deleteKeysByPattern('posts:page=*:limit=*');
-        await deleteKeysByPattern(`userPosts:${username}:page=*:limit=*`);
-        await deleteKeysByPattern(`userPostsLikes:${username}:page=*:limit=*`);
+        await deleteKeysByPattern(`posts:page=*:limit=*:user=${userId}`);
+        await deleteKeysByPattern(`userPosts:${username}:page=*:limit=*:user=${userId}`);
 
         res.status(201).json({
             success: true,

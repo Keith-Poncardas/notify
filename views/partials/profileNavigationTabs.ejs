@@ -1,15 +1,18 @@
   <% const links = [
   {
     title: 'Posts',
-    path: `/${viewUser.username}`
+    path: `/${viewUser.username}`,
+    isActive: true
   },
   {
     title: 'Liked',
-    path: `/${viewUser.username}/likes`
+    path: `/${viewUser.username}/likes`,
+    isActive: false
   },
   {
     title: 'Followers',
-    path: `/${viewUser.username}/followers`
+    path: `/${viewUser.username}/followers`,
+    isActive: false
   }
   ]; %>
 
@@ -18,7 +21,7 @@
     <ul class="nav nav-tabs border-0">
       <% links.forEach(link => { %>
       <li class="nav-item"></li>
-      <a class="nav-link disabled <%= path === link.path || path === `${link.path}/page/${currentPage}` ? 'rounded-top active fw-semibold' : 'text-secondary hover-primary'  %>" href="<%= link.path %>" style="transition: all 0.2s ease-in-out;">
+      <a class="nav-link <%= path === link.path || path === `${link.path}/page/${currentPage}` ? 'rounded-top active fw-semibold' : 'text-secondary hover-primary'  %> <%= !link.isActive ? 'disabled' : '' %>" href="<%= link.path %>" style="transition: all 0.2s ease-in-out;">
         <%= link.title %>
       </a>
       </li>

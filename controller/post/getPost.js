@@ -11,7 +11,7 @@ const { getOrSetCache } = require("../../utils/cache");
  * @returns {void} Renders the homepage template with enriched posts data
  */
 module.exports = async (req, res, next) => {
-    const page = parseInt(req.query.page) || 1;
+    const page = parseInt(req.params.pageNumber) || 1;
     const limit = 10;
     const query = req.query.q || '';
     const username = req.query.username || null;
@@ -19,9 +19,6 @@ module.exports = async (req, res, next) => {
     const user = res.locals.user || null;
     const userId = user ? user._id.toString() : 'guest';
 
-    console.log(`USER ID GET POST: ${userId}`);
-
-    // ✅ Smarter cache key (considering username + query, optional)
     const cacheKey = `posts:page=${page}:limit=${limit}:user=${userId}`;
 
     try {
@@ -34,9 +31,7 @@ module.exports = async (req, res, next) => {
                 query,
                 userId
             });
-        }, 60); // cache for 60 seconds
-
-        console.log(posts[0]);
+        }, 60);
 
         res.render('home/index', {
             posts,

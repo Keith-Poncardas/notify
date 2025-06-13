@@ -33,6 +33,11 @@ const postSchema = new Schema({
     public_id: {
         type: String,
         default: null
+    },
+    type: {
+        type: String,
+        enum: ['post', 'profile'],
+        default: 'post'
     }
 }, {
     timestamps: true

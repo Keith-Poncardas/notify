@@ -2,6 +2,7 @@ const { editUser } = require('../../services/userService');
 const uploadToCloudinary = require('../../utils/claudinaryUpload');
 const redis = require('../../config/redisClient');
 const deleteKeysByPattern = require('../../utils/deleteKeysByPattern');
+const { createPost } = require("../../services/postService");
 
 /**
  * Updates user profile information
@@ -15,22 +16,33 @@ const deleteKeysByPattern = require('../../utils/deleteKeysByPattern');
  * @throws {Error} Forwards any errors to Express error handler
  */
 module.exports = async (req, res, next) => {
-    const userId = res.locals.user._id.toString();
+    const user = res.locals.user || null;
+    const userId = user ? user._id.toString() : 'guest';
 
     try {
         const { firstname, lastname, username, bio } = req.body;
         const profileData = { userId, firstname, lastname, username, bio };
 
-        await redis.del(`userProfile:${username}`);
-        await deleteKeysByPattern(`userPosts:${username}:page=*:limit=*`);
-
         if (req.file) {
             const result = await uploadToCloudinary(req.file.buffer, 'Profile Image');
             profileData.profile_image = result.secure_url;
             profileData.public_id = result.public_id;
+
+            await createPost(userId, {
+                post_image: result.secure_url,
+                public_id: result.public_id,
+                type: 'profile'
+            });
+
         };
 
+        console.log(profileData);
+
         const editedProfile = await editUser(userId, profileData);
+
+        await deleteKeysByPattern(`userPostsLikes:${username}:page=*:limit=*:user=${userId}`);
+        await deleteKeysByPattern(`userPosts:${username}:page=*:limit=*:user=${userId}`);
+
         res.json(editedProfile);
     } catch (err) {
         next(err);

@@ -12,25 +12,30 @@
 
         <!-- Author Info -->
         <div class="flex-grow-1">
-          <div class="d-flex align-items-center">
+          <!-- Name + Action -->
+          <div class="d-flex flex-column flex-sm-row align-items-start align-items-sm-center gap-1">
             <h6 class="mb-0 fw-bold" id="post-author">
               <%= post.author.firstname %> <%= post.author.lastname %>
-              <% if (user && post.author && post.author._id?.toString() === user._id?.toString()) { %>
-              <span class="badge bg-primary ms-2">You</span>
-              <% } %>
             </h6>
-            <!-- Follow button like Facebook -->
-            <% if (user && post.author && post.author._id?.toString() !== user._id?.toString()) { %>
-            <span class="text-muted ms-2">•</span>
-            <small class="text-primary ms-2" style="cursor: pointer;">Follow</small>
+
+            <% if (post.type === 'profile') { %>
+            <small class="text-muted custom-small">updated their profile picture</small>
+            <% } else if (user && post.author && post.author._id?.toString() !== user._id?.toString()) { %>
+            <div class="d-flex align-items-center gap-1">
+              <span class="text-muted">•</span>
+              <small class="text-primary custom-small" style="cursor: pointer;">Follow</small>
+            </div>
             <% } %>
           </div>
 
-          <div class="d-flex align-items-center">
-            <small class="text-muted" datetime="2025-03-29"><%= timeAgo(post.createdAt) %></small>
-            <i class="fas fa-globe-americas text-muted ms-2" style="font-size: 12px;"></i>
+          <!-- Time + Visibility -->
+          <div class="d-flex align-items-center gap-2 mt-1">
+            <small class="text-muted custom-small" datetime="2025-03-29"><%= timeAgo(post.createdAt) %></small>
+            <i class="fas fa-globe-americas text-muted" style="font-size: 12px;"></i>
           </div>
         </div>
+
+
 
         <!-- Dropdown Actions -->
         <div class="ms-auto">
@@ -58,6 +63,9 @@
 
       <!-- Post Content -->
       <div style="cursor: pointer;" onclick="window.location = `/posts/<%= post._id %>/view`" class="mb-3">
+
+
+        <% if (!post.type || post.type === 'post') { %>
         <p class="card-text mb-3 lh-base">
           <% if (!isExpand) { %>
           <% if (post.description.length < 170) { %>
@@ -71,10 +79,37 @@
         </p>
 
         <% if (post.post_image) { %>
-        <div class="rounded-3 overflow-hidden mb-3">
-          <img src="<%= post.post_image %>" class="img-fluid w-100" style="height: 400px; object-fit: cover;" alt="<%= post.description %>" />
+        <div class="mb-3">
+          <div style="width: 100%; max-height: 500px; overflow: hidden; position: relative;">
+            <img src="<%= post.post_image %>" alt="<%= post.description || 'Profile Picture' %>" style="width: 100%; height: auto; object-fit: cover; display: block;">
+          </div>
         </div>
         <% } %>
+
+        <% } else if (post.type === 'profile') { %>
+        <!-- Profile-style Post without bezels/sides like Facebook -->
+        <div class="mb-3 p-0">
+
+          <!-- Cover Photo Section -->
+          <div style="height: 250px; background-color: #ccc; position: relative; overflow: hidden;">
+            <!-- Optional cover photo can go here -->
+          </div>
+
+          <!-- Profile Picture - centered and overlapping -->
+          <div class="position-absolute start-50 translate-middle-x" style="top: 210px;">
+            <div class="rounded-circle overflow-hidden border border-3 border-white shadow" style="width: 280px; height: 280px;">
+              <img src="<%= post.post_image %>" class="w-100 h-100" style="object-fit: cover;" alt="Profile Picture">
+            </div>
+          </div>
+
+          <!-- Spacer below profile image -->
+          <div style="height: 200px;"></div>
+
+        </div>
+
+        <% } %>
+
+
       </div>
 
       <!-- Include your existing interaction buttons if needed -->
